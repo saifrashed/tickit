@@ -1,13 +1,16 @@
 import {DELETE_USER, GET_USER, LOADING_USER, UPDATE_USER} from "./types";
 import axios from "axios";
 
-export const getUser = (token) => dispatch => {
+export const getUser = (token) => async dispatch => {
     dispatch(setUserLoading());
-    axios.get("/users/", {headers: {"x-auth-token": token}}).then(res =>
-        dispatch({
-            type:    GET_USER,
-            payload: res.data[0]
-        }))
+    const user = await axios.get("/users/", {headers: {"x-auth-token": token}});
+
+    dispatch({
+        type:    GET_USER,
+        payload: user.data[0]
+    });
+
+    return user;
 };
 
 export const updateUser = (token, body) => async dispatch => {

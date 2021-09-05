@@ -68,7 +68,8 @@ class FixedPlugin extends Component {
                                 Contact
                             </a>
 
-                            <p>Scan de QR code in de TickIT app om toegang te krijgen (Deel deze QR code met niemand).</p>
+                            <p>Scan de QR code in de TickIT app om toegang te krijgen (Deel deze QR code met
+                               niemand).</p>
 
                             <QRCode
                                 value={this.props.authData.token}

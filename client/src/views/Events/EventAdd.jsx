@@ -1,10 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 // reactstrap components
 import {Card, CardBody, CardHeader, Col, Form, FormGroup, Input, Row} from "reactstrap";
 // reactstrap
 import {connect} from "react-redux";
 import {addEvent} from "../../actions/eventActions";
-import PropTypes from "prop-types";
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.jsx";
 import {NotificationContainer} from "../../components/Notifications/Notifications";
@@ -31,8 +31,7 @@ class EventAdd extends React.Component {
     addEvent = async () => {
         const {...body} = this.state;
         const newEvent  = await this.props.addEvent(this.props.authData.token, body);
-
-        window.location.href = "../event/" + newEvent.data._id;
+        this.props.history.push("../event/" + newEvent.data._id);
     };
 
     /**
@@ -137,12 +136,12 @@ class EventAdd extends React.Component {
                                             </Col>
                                         </Row>
                                         <button className="btn-round btn btn-success"
-                                                style={{fontSize: "1em", position: "relative", width: "100px"}}
+                                                style={{fontSize: "1em"}}
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     this.addEvent();
                                                 }}>
-                                            Create
+                                            Maak aan
                                         </button>
                                     </Form>
                                 </CardBody>

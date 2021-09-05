@@ -3,6 +3,57 @@ const mongoose = require('mongoose');
 const multer   = require('multer');
 const auth     = require('../middleware/auth');
 const Events   = require('../models/events.model');
+const moment   = require('moment');
+
+
+/**
+ * Event read all
+ */
+router.route('/').get(auth, async (req, res) => {
+    try {
+        const event = await Events.find({
+            user: new mongoose.Types.ObjectId(req.user)
+        });
+
+        res.json(event);
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+});
+
+/**
+ * Event read active
+ */
+router.route('/active').get(auth, async (req, res) => {
+    try {
+
+        const event = await Events.find({
+            user:     new mongoose.Types.ObjectId(req.user),
+            eventEnd: {$gte: moment().toDate()}
+        });
+
+        res.json(event);
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+});
+
+/**
+ * Event read inactive
+ */
+router.route('/inactive').get(auth, async (req, res) => {
+    try {
+
+        const event = await Events.find({
+            user:     new mongoose.Types.ObjectId(req.user),
+            eventEnd: {$lte: moment().toDate()}
+        });
+
+        res.json(event);
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+});
 
 /**
  * Get event
@@ -14,7 +65,7 @@ router.route('/:id').get(async (req, res) => {
             {
                 $match:
                     {
-                        _id: new mongoose.Types.ObjectId(req.params.id)
+                        _id: new mongoose.Types.ObjectId(req.params.id),
                     }
             },
             {

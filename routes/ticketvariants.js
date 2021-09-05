@@ -116,7 +116,7 @@ router.route('/toggle/:id').get(auth, async (req, res) => {
 
         toggledTicketVariant.availability = !toggledTicketVariant.availability;
 
-        toggledTicketVariant.save();
+        await toggledTicketVariant.save();
 
         res.json(toggledTicketVariant);
     } catch (err) {

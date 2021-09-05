@@ -1,9 +1,9 @@
-const router             = require('express').Router();
-const bcrypt             = require('bcryptjs');
-const jwt                = require('jsonwebtoken');
-const auth               = require('../middleware/auth');
-const mongoose           = require('mongoose');
-const Users              = require('../models/users.model');
+const router   = require('express').Router();
+const bcrypt   = require('bcryptjs');
+const jwt      = require('jsonwebtoken');
+const auth     = require('../middleware/auth');
+const mongoose = require('mongoose');
+const Users    = require('../models/users.model');
 
 require('dotenv').config();
 
@@ -50,22 +50,21 @@ router.route('/').get(auth, async (req, res) => {
  */
 router.route('/update/').post(auth, async (req, res) => {
     try {
-        let {userName, userEmail, firstName, lastName, address, zipCode, city, country, mollieKey, mollieCustomerId, role} = req.body;
+        let {userName, userEmail, firstName, lastName, address, zipCode, city, country, IBAN, role} = req.body;
 
         const user = await Users.findById(req.user);
 
 
-        user.userName         = userName || user.userName;
-        user.userEmail        = userEmail || user.userEmail;
-        user.firstName        = firstName || user.firstName;
-        user.lastName         = lastName || user.lastName;
-        user.address          = address || user.address;
-        user.zipCode          = zipCode || user.zipCode;
-        user.city             = city || user.city;
-        user.country          = country || user.country;
-        user.mollieKey        = mollieKey || user.mollieKey;
-        user.mollieCustomerId = mollieCustomerId || user.mollieCustomerId;
-        user.role             = role || user.role;
+        user.userName  = userName || user.userName;
+        user.userEmail = userEmail || user.userEmail;
+        user.firstName = firstName || user.firstName;
+        user.lastName  = lastName || user.lastName;
+        user.address   = address || user.address;
+        user.zipCode   = zipCode || user.zipCode;
+        user.city      = city || user.city;
+        user.country   = country || user.country;
+        user.IBAN      = IBAN || user.IBAN;
+        user.role      = user.role = role || user.role;
 
         const savedUser = await user.save();
 
@@ -84,7 +83,7 @@ router.route('/update/').post(auth, async (req, res) => {
  */
 router.route('/register').post(async (req, res) => {
     try {
-        let {userName, userEmail, userPassword, firstName, lastName, address, zipCode, city, country, mollieKey, mollieCustomerId, role} = req.body;
+        let {userName, userEmail, userPassword, firstName, lastName, address, zipCode, city, country, role} = req.body;
 
         // validate
 
@@ -115,8 +114,6 @@ router.route('/register').post(async (req, res) => {
             country,
             zipCode,
             userPassword: passwordHash,
-            mollieKey,
-            mollieCustomerId,
             role
         });
 

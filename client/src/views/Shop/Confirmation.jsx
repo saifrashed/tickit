@@ -65,7 +65,14 @@ class Confirmation extends React.Component {
                 <div className="container" style={{maxWidth: "960px"}}>
                     <div className="block-heading">
                         <img src={require("../../assets/img/tickit_logo.png")}
-                             style={{width: "150px", position: "absolute", top: "25px", left: "25px"}}/>
+                             style={{
+                                 width:    "150px",
+                                 position: "absolute",
+                                 top:      "25px",
+                                 left:     "0",
+                                 right:    "0",
+                                 margin:   "auto"
+                             }}/>
                     </div>
 
                     <div className="content text-center p-3">

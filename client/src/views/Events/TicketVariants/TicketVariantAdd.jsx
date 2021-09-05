@@ -31,11 +31,9 @@ class TicketVariantAdd extends React.Component {
      * Creates ticket variant
      */
     addTicketVariant = async () => {
-        const {...body} = this.state;
-
+        const {...body}        = this.state;
         const newTicketVariant = await this.props.addTicketVariant(this.props.authData.token, body);
-
-        window.location.href = "../../" + this.props.match.params.id;
+        this.props.history.push("../../" + this.props.match.params.id);
     };
 
     /**
@@ -71,11 +69,11 @@ class TicketVariantAdd extends React.Component {
                                             <Col md="12">
                                                 <FormGroup>
                                                     <label>
-                                                        Beschrijving
+                                                        Naam
                                                     </label>
                                                     <Input
                                                         name="description"
-                                                        placeholder="Beschrijving"
+                                                        placeholder="Naam"
                                                         onChange={(e) => {
                                                             this.handleChange(e)
                                                         }}
@@ -109,7 +107,7 @@ class TicketVariantAdd extends React.Component {
                                             </Col>
                                         </Row>
                                         <button className="btn-round btn btn-success"
-                                                style={{fontSize: "1em", position: "relative", width: "100px"}}
+                                                style={{fontSize: "1em"}}
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     this.addTicketVariant();
@@ -128,7 +126,6 @@ class TicketVariantAdd extends React.Component {
 }
 
 TicketVariantAdd.propTypes = {
-    getUser:           PropTypes.func.isRequired,
     addTicketVariant:  PropTypes.func.isRequired,
     userData:          PropTypes.object.isRequired,
     authData:          PropTypes.object.isRequired,

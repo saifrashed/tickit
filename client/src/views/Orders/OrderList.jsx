@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.jsx";
-import {NotificationContainer, SuccessNotification, WarningNotification} from "../../components/Notifications/Notifications";
+import {NotificationContainer, SuccessNotification} from "../../components/Notifications/Notifications";
 
 
 class OrderList extends React.Component {
@@ -16,22 +16,45 @@ class OrderList extends React.Component {
         super(props);
 
         this.state = {
-            tbody: [],
+            tbody:  [],
+            orders: []
         };
     }
 
-    componentWillMount() {
-        if (this.props.getOrders(localStorage.getItem("auth-token"))) {
-            SuccessNotification("Bestellingen zijn ingeladen")
-        } else {
-            WarningNotification("Er is iets mis gegaan.")
-        }
+    /**
+     * Initialise state
+     */
+    componentDidMount() {
+        const token = this.props.authData.token; // User token
+
+        Promise.all([this.props.getOrders(token)])
+               .then(([orders]) => {
+                   this.setState({
+                       orders: orders.data
+                   });
+
+                   SuccessNotification("Bestellingen zijn ingeladen")
+               });
     }
+
+    /**
+     * Refresh component state
+     */
+    refresh = () => {
+        const token = this.props.authData.token; // User token
+
+        Promise.all([this.props.getOrders(token)])
+               .then(([orders]) => {
+                   this.setState({
+                       orders: orders.data
+                   });
+
+                   SuccessNotification("Bijgewerkt!")
+               });
+    };
 
 
     render() {
-        const {orders} = this.props.orderData;
-
         return (
             <>
                 <PanelHeader size="sm"/>
@@ -57,7 +80,7 @@ class OrderList extends React.Component {
                                         </thead>
                                         <tbody>
 
-                                        {orders ? orders.map((value, index) => (
+                                        {this.state.orders ? this.state.orders.map((value, index) => (
                                             <tr key={index}>
                                                 <td>{value._id}</td>
                                                 <td>{value.firstName}</td>
@@ -80,9 +103,9 @@ class OrderList extends React.Component {
                                             <td className="text-center">
                                                 <a href="#"
                                                    className="btn-round btn-outline-default btn-icon btn btn-default"
-                                                   style={{margin: "0px 5px"}} onClick={(e) => {
+                                                   style={{margin: "0px 5px"}} onClick={async (e) => {
                                                     e.preventDefault();
-                                                    this.props.getOrders(localStorage.getItem("auth-token"));
+                                                    await this.refresh();
                                                 }}>
                                                     <i className="now-ui-icons loader_refresh"></i>
                                                 </a>

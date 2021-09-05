@@ -1,6 +1,6 @@
 import axios from "axios";
 import {saveAs} from "file-saver"
-import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, GET_PAYMENT_URL, LOADING_ORDER, UPDATE_ORDER} from "./types";
+import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, GET_PAYMENT_URL, LOADING_ORDER, UPDATE_ORDER, ORDER_REPORT_DAILY, ORDER_REPORT_MONTHLY, ORDER_REPORT_YEARLY} from "./types";
 
 export const getOrder = (token, id) => async dispatch => {
     dispatch(setOrderLoading());
@@ -78,6 +78,44 @@ export const toPayment = (id) => async dispatch => {
 
     return paymentUrl
 };
+
+export const getDailyOrderReport = (token) => async dispatch => {
+    dispatch(setOrderLoading());
+    const report = await axios.get("/orders/report/daily", {headers: {"x-auth-token": token}});
+
+    dispatch({
+        type:    ORDER_REPORT_DAILY,
+        payload: report.data
+    });
+
+    return report;
+};
+
+export const getMonthlyOrderReport = (token) => async dispatch => {
+    dispatch(setOrderLoading());
+    const report = await axios.get("/orders/report/monthly", {headers: {"x-auth-token": token}});
+
+    dispatch({
+        type:    ORDER_REPORT_MONTHLY,
+        payload: report.data
+    });
+
+    return report;
+};
+
+export const getYearlyOrderReport = (token) => async dispatch => {
+    dispatch(setOrderLoading());
+    const report = await axios.get("/orders/report/yearly", {headers: {"x-auth-token": token}});
+
+    dispatch({
+        type:    ORDER_REPORT_YEARLY,
+        payload: report.data
+    });
+
+    return report;
+};
+
+
 
 export const setOrderLoading = () => {
     return {
