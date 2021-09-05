@@ -32,7 +32,7 @@ export default function ({navigation}) {
     }
 
     const handleBarCodeScanned = async ({type, data}) => {
-        console.log(data)
+        auth.setScannerTicket(data);
         navigation.navigate("ScannerResult")
     };
 

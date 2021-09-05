@@ -1,18 +1,14 @@
 import React from "react";
+import moment from 'moment';
+import PropTypes from "prop-types";
 // reactstrap components
 import {Button, Card, CardBody, CardHeader, CardTitle, Col, Form, FormGroup, Input, Row, Table} from "reactstrap";
-
 import {connect} from "react-redux";
 import {getEvent, updateEvent, uploadImageEvent} from "../../actions/eventActions";
 import {toggleTicketVariant} from "../../actions/ticketVariantActions";
-import PropTypes from "prop-types";
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.jsx";
-import {Bar, Line} from "react-chartjs-2";
 import {NotificationContainer, SuccessNotification, WarningNotification} from "../../components/Notifications/Notifications";
-
-import {dashboard24HoursPerformanceChart, dashboardAllProductsChart} from "variables/charts.jsx";
-
 
 /**
  * Reads a event
@@ -36,24 +32,49 @@ class EventRead extends React.Component {
 
 
     /**
-     * Gets event
+     * Initialise state
      */
-    componentWillMount() {
-        this.props.getEvent(this.props.match.params.id);
-        this.shopActivationAlert();
+    componentDidMount() {
+        Promise.all([this.props.getEvent(this.props.match.params.id)])
+               .then(([event]) => {
+                   this.setState({
+                       _id:            event.data[0]._id,
+                       eventName:      event.data[0].eventName,
+                       eventStart:     moment(event.data[0].eventStart, moment.ISO_8601).format("YYYY-MM-DDTHH:mm"),
+                       eventEnd:       moment(event.data[0].eventEnd, moment.ISO_8601).format("YYYY-MM-DDTHH:mm"),
+                       eventLocation:  event.data[0].eventLocation,
+                       eventAge:       event.data[0].eventAge,
+                       ticketVariants: event.data[0].ticketVariants,
+                       user:           event.data[0].user
+                   });
+
+                   if (event.data[0].ticketVariants.length) {
+                       SuccessNotification("Bekijk de shop online!");
+                   } else {
+                       WarningNotification("Voeg ticket varianten toe.");
+                   }
+               });
     }
 
     /**
-     * Handles shoppage notification for admin
+     * Refresh component state
      */
-    shopActivationAlert = async () => {
-        const event = await this.props.getEvent(this.props.match.params.id);
+    refresh = async () => {
+        Promise.all([this.props.getEvent(this.props.match.params.id)])
+               .then(([event]) => {
+                   this.setState({
+                       _id:            event.data[0]._id,
+                       eventName:      event.data[0].eventName,
+                       eventStart:     moment(event.data[0].eventStart, moment.ISO_8601).format("YYYY-MM-DDTHH:mm"),
+                       eventEnd:       moment(event.data[0].eventEnd, moment.ISO_8601).format("YYYY-MM-DDTHH:mm"),
+                       eventLocation:  event.data[0].eventLocation,
+                       eventAge:       event.data[0].eventAge,
+                       ticketVariants: event.data[0].ticketVariants,
+                       user:           event.data[0].user
+                   });
 
-        if (this.props.eventData.event.ticketVariants.length) {
-            SuccessNotification("Bekijk de shop online!");
-        } else {
-            WarningNotification("Voeg ticket varianten toe.");
-        }
+                   SuccessNotification("Bijgewerkt!");
+               });
     };
 
 
@@ -65,8 +86,6 @@ class EventRead extends React.Component {
         const toggledTicketVariant = await this.props.toggleTicketVariant(this.props.authData.token, id);
         const event                = await this.props.getEvent(this.props.match.params.id);
 
-        console.log(toggledTicketVariant);
-
         SuccessNotification(toggledTicketVariant.data.description + (toggledTicketVariant.data.availability ? " is verkrijgbaar" : " is niet verkrijgbaar"));
     };
 
@@ -74,8 +93,7 @@ class EventRead extends React.Component {
      * Updates Event
      */
     updateEvent = async () => {
-        const {...body} = this.state;
-
+        const {...body}    = this.state;
         const updatedEvent = await this.props.updateEvent(this.props.authData.token, this.props.match.params.id, body);
 
         SuccessNotification(updatedEvent.data.eventName + " is aangepast!");
@@ -118,8 +136,8 @@ class EventRead extends React.Component {
         return new Intl.NumberFormat('nl-NL', {style: 'currency', currency: 'EUR'}).format(number)
     };
 
-    render() {
 
+    render() {
         const {event} = this.props.eventData;
 
         return (
@@ -145,7 +163,7 @@ class EventRead extends React.Component {
                                 <CardBody>
                                     <div className="author">
                                         <h5 className="title">{event.eventName}</h5>
-                                        <p className="description">{new Date(event.eventStart).toLocaleString() + " - " + new Date(event.eventEnd).toLocaleString()}</p>
+                                        <p className="description">{new Date(this.state.eventStart).toLocaleString() + " - " + new Date(this.state.eventEnd).toLocaleString()}</p>
                                     </div>
                                 </CardBody>
                                 <hr/>
@@ -179,7 +197,7 @@ class EventRead extends React.Component {
                                                     <Input
                                                         name="eventName"
                                                         placeholder="Evenement naam"
-                                                        defaultValue={event.eventName}
+                                                        value={this.state.eventName}
                                                         type="text"
                                                         onChange={(e) => {
                                                             this.handleChange(e)
@@ -193,10 +211,11 @@ class EventRead extends React.Component {
                                                         Evenement start datum/tijd
                                                     </label>
                                                     <Input
-                                                        disabled
+
                                                         name="eventStart"
                                                         placeholder="Event start"
-                                                        defaultValue={event.eventStart}
+                                                        type="datetime-local"
+                                                        value={this.state.eventStart}
                                                         onChange={(e) => {
                                                             this.handleChange(e)
                                                         }}
@@ -207,10 +226,10 @@ class EventRead extends React.Component {
                                                 <FormGroup>
                                                     <label>Evenement eind datum/tijd</label>
                                                     <Input
-                                                        disabled
                                                         name="eventEnd"
                                                         placeholder="Event end"
-                                                        defaultValue={event.eventEnd}
+                                                        type="datetime-local"
+                                                        defaultValue={this.state.eventEnd}
                                                         onChange={(e) => {
                                                             this.handleChange(e)
                                                         }}
@@ -225,7 +244,7 @@ class EventRead extends React.Component {
                                                     <Input
                                                         name="eventLocation"
                                                         placeholder="Location"
-                                                        defaultValue={event.eventLocation}
+                                                        defaultValue={this.state.eventLocation}
                                                         type="text"
                                                         onChange={(e) => {
                                                             this.handleChange(e)
@@ -239,7 +258,7 @@ class EventRead extends React.Component {
                                                     <Input
                                                         name="eventAge"
                                                         placeholder="Minimum age"
-                                                        defaultValue={event.eventAge}
+                                                        defaultValue={this.state.eventAge}
                                                         type="number"
                                                         onChange={(e) => {
                                                             this.handleChange(e)
@@ -250,9 +269,10 @@ class EventRead extends React.Component {
                                         </Row>
                                         <button className="btn-round btn btn-success"
                                                 style={{fontSize: "1em", position: "relative", width: "100px"}}
-                                                onClick={(e) => {
+                                                onClick={async (e) => {
                                                     e.preventDefault();
-                                                    this.updateEvent();
+                                                    await this.updateEvent();
+                                                    await this.refresh();
                                                 }}>
                                             Opslaan
                                         </button>
@@ -263,38 +283,6 @@ class EventRead extends React.Component {
                     </Row>
 
                     <Row>
-                        <Col xs={12} md={6}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle tag="h4">Check-in</CardTitle>
-                                    <h5 className="card-category">Statistieken</h5>
-                                </CardHeader>
-                                <CardBody>
-                                    <div className="chart-area">
-                                        <Bar
-                                            data={dashboard24HoursPerformanceChart.data}
-                                            options={dashboard24HoursPerformanceChart.options}
-                                        />
-                                    </div>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col xs={12} md={6}>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle tag="h4">Bestellingen</CardTitle>
-                                    <h5 className="card-category">Statistieken</h5>
-                                </CardHeader>
-                                <CardBody>
-                                    <div className="chart-area">
-                                        <Line
-                                            data={dashboardAllProductsChart.data}
-                                            options={dashboardAllProductsChart.options}
-                                        />
-                                    </div>
-                                </CardBody>
-                            </Card>
-                        </Col>
                         <Col xs={12}>
                             <Card>
                                 <CardHeader>
@@ -308,12 +296,12 @@ class EventRead extends React.Component {
                                             <th>Prijs</th>
                                             <th>Verkoop</th>
                                             <th>Personen</th>
-                                            <th>Bestellingen</th>
+                                            <th>Verkocht</th>
                                             <th className="text-center">Acties</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {event.ticketVariants ? event.ticketVariants.map((value, index) => (
+                                        {this.state.ticketVariants ? this.state.ticketVariants.map((value, index) => (
                                             <tr key={index}>
                                                 <td>{value.description}</td>
                                                 <td>{this.formatPrice(value.price)}</td>
@@ -329,14 +317,17 @@ class EventRead extends React.Component {
                                                     </a>
                                                     <a href="#"
                                                        className="btn-round btn-outline-primary btn-icon btn btn-default"
-                                                       style={{margin: "0px 5px"}} onClick={(e) => {
+                                                       style={{margin: "0px 5px"}} onClick={async (e) => {
                                                         e.preventDefault();
-                                                        this.toggleTicketVariant(value._id);
+                                                        await this.toggleTicketVariant(value._id);
+                                                        await this.refresh();
                                                     }}>
                                                         <i className="now-ui-icons media-1_button-power"></i>
                                                     </a>
                                                 </td>
-                                            </tr>)) : ""}
+                                            </tr>)) : (<tr>
+                                            <td></td>
+                                        </tr>)}
                                         <tr>
                                             <td colSpan="5"></td>
                                             <td className="text-center">
@@ -344,7 +335,7 @@ class EventRead extends React.Component {
                                                    className="btn-round btn-outline-default btn-icon btn btn-default"
                                                    style={{margin: "0px 5px"}} onClick={(e) => {
                                                     e.preventDefault();
-                                                    this.props.getEvent(this.props.match.params.id);
+                                                    this.refresh();
                                                 }}>
                                                     <i className="now-ui-icons loader_refresh"></i>
                                                 </a>

@@ -4,6 +4,7 @@ const {createMollieClient} = require('@mollie/api-client');
 const mollieClient         = createMollieClient({apiKey: process.env.MOLLIE_KEY});
 const sgMail               = require('@sendgrid/mail').setApiKey(process.env.SENDGRID_API_KEY);
 const pdf                  = require('html-pdf');
+const mongoose             = require('mongoose');
 var QRCode                 = require('qrcode');
 
 const ticketTemplate = require('../templates/documents/ticket');
@@ -17,6 +18,205 @@ let Tickets        = require('../models/tickets.model');
 
 require('dotenv').config();
 
+/** Statistics **/
+
+/**
+ * Daily report of orders
+ */
+router.route('/report/daily').get(auth, async (req, res) => {
+    try {
+        const orders = await Orders.aggregate(
+            [
+                // Join with user_role table
+                {
+                    $lookup: {
+                        from:         "events",
+                        localField:   "eventId",
+                        foreignField: "_id",
+                        as:           "order_event"
+                    }
+                },
+                {
+                    $unwind: "$order_event"
+                },
+                {
+                    /* Filter out users who have not yet paid their order */
+                    $match: {
+                        /* isPaid is an boolean field */
+                        'isPaid':           true,
+                        'order_event.user': new mongoose.Types.ObjectId(req.user)
+
+                    }
+                },
+                {
+                    /* group by year and month of the placed order */
+                    $group: {
+                        _id:      {
+                            year:  {
+                                $year: '$createdAt'
+                            },
+                            month: {
+                                $month: '$createdAt'
+                            },
+                            day:   {
+                                $dayOfMonth: '$createdAt'
+                            }
+                        },
+                        subtotal: {
+                            $sum: {$round: ["$subTotal", 2]}
+                        },
+                        total:    {$sum: {$round: ["$total", 2]}},
+                        orders:   {$sum: 1}
+                    }
+                },
+                {
+                    /* sort descending (latest orders first) */
+                    $sort: {
+                        '_id.year':  -1,
+                        '_id.month': -1,
+                        '_id.day':   -1
+                    }
+                },
+                {
+                    $limit: 100,
+                },
+            ]
+        );
+
+        console.log(orders);
+
+        res.json(orders);
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+});
+
+/**
+ * Monthly Report of orders
+ */
+router.route('/report/monthly').get(auth, async (req, res) => {
+    try {
+        const orders = await Orders.aggregate(
+            [
+                // Join with user_role table
+                {
+                    $lookup: {
+                        from:         "events",
+                        localField:   "eventId",
+                        foreignField: "_id",
+                        as:           "order_event"
+                    }
+                },
+                {
+                    $unwind: "$order_event"
+                },
+                {
+                    /* Filter out users who have not yet paid their order */
+                    $match: {
+                        /* isPaid is an boolean field */
+                        'isPaid':           true,
+                        'order_event.user': new mongoose.Types.ObjectId(req.user)
+
+                    }
+                },
+                {
+                    /* group by year and month of the placed order */
+                    $group: {
+                        _id:      {
+                            year:  {
+                                $year: '$createdAt'
+                            },
+                            month: {
+                                $month: '$createdAt'
+                            }
+                        },
+                        subtotal: {
+                            $sum: {$round: ["$subTotal", 2]}
+                        },
+                        total:    {$sum: {$round: ["$total", 2]}},
+                        orders:   {$sum: 1}
+                    }
+                },
+                {
+                    /* sort descending (latest orders first) */
+                    $sort: {
+                        '_id.year':  -1,
+                        '_id.month': -1
+                    }
+                },
+                {
+                    $limit: 100,
+                },
+            ]
+        );
+
+        res.json(orders);
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+});
+
+/**
+ * Yearly report of orders
+ */
+router.route('/report/yearly').get(auth, async (req, res) => {
+    try {
+        const orders = await Orders.aggregate(
+            [
+                // Join with user_role table
+                {
+                    $lookup: {
+                        from:         "events",
+                        localField:   "eventId",
+                        foreignField: "_id",
+                        as:           "order_event"
+                    }
+                },
+                {
+                    $unwind: "$order_event"
+                },
+                {
+                    /* Filter out users who have not yet paid their order */
+                    $match: {
+                        /* isPaid is an boolean field */
+                        'isPaid':           true,
+                        'order_event.user': new mongoose.Types.ObjectId(req.user)
+
+                    }
+                },
+                {
+                    /* group by year  of the placed order */
+                    $group: {
+                        _id:      {
+                            year: {
+                                $year: '$createdAt'
+                            }
+                        },
+                        subtotal: {
+                            $sum: {$round: ["$subTotal", 2]}
+                        },
+                        total:    {$sum: {$round: ["$total", 2]}},
+                        orders:   {$sum: 1}
+
+                    }
+                },
+                {
+                    /* sort descending (latest orders first) */
+                    $sort: {
+                        '_id.year': -1
+                    }
+                },
+                {
+                    $limit: 100,
+                },
+            ]
+        );
+
+        res.json(orders);
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+});
 
 /**
  * Creates a payment URL

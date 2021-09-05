@@ -20,12 +20,11 @@ class Startup extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.token !== this.props.token && prevProps.user !== this.props.user) {
-
-            this.verifyUser(this.props.token);
-            this.getUser(this.props.token);
-
-            this.setState({loaded: true});
-            console.log("logged in!")
+            Promise.all([this.verifyUser(this.props.token), this.getUser(this.props.token)])
+                   .then(([verifiedUser, userData]) => {
+                       this.setState({loaded: true});
+                       console.log("logged in!")
+                   });
         }
     }
 

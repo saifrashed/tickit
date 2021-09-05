@@ -240,11 +240,9 @@ class ShopCheckout extends React.Component {
 
                                     <div className="custom-control custom-checkbox">
                                         <input type="checkbox" className="custom-control-input" id="same-address"/>
-                                        <label className="custom-control-label" htmlFor="same-address">Ik ga akkoord met
-                                                                                                       de
-                                                                                                       privacy &
-                                                                                                       algemene
-                                                                                                       voorwaarden</label>
+                                        <label className="custom-control-label" htmlFor="same-address">
+                                            Ik ga akkoord met de privacy & algemene voorwaarden
+                                        </label>
                                     </div>
 
                                     <hr className="mb-4"/>

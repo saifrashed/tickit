@@ -1,10 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
 // reactstrap components
 import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
-import {connect} from "react-redux";
 import {getUser} from "../../actions/userActions";
-import {deleteEvent} from "../../actions/eventActions";
-import PropTypes from "prop-types";
+import {deleteEvent, getActiveEvents, getInactiveEvents} from "../../actions/eventActions";
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.jsx";
 import {NotificationContainer, SuccessNotification} from "../../components/Notifications/Notifications";
@@ -12,6 +12,50 @@ import {NotificationContainer, SuccessNotification} from "../../components/Notif
 // reactstrap
 
 class EventList extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            activeEvents:   [],
+            inactiveEvents: [],
+            isLoaded:       false
+        }
+    }
+
+    /**
+     * Initialise state
+     */
+    componentDidMount() {
+        const token = this.props.authData.token; // User token
+
+        Promise.all([this.props.getActiveEvents(token), this.props.getInactiveEvents(token)])
+               .then(([activeEvents, inactiveEvents]) => {
+                   this.setState({
+                       activeEvents:   activeEvents.data,
+                       inactiveEvents: inactiveEvents.data,
+                       isLoaded:       true
+                   });
+               });
+    }
+
+    /**
+     * Refresh component state
+     */
+    refresh = async () => {
+        const token = this.props.authData.token; // User token
+
+        Promise.all([this.props.getActiveEvents(token), this.props.getInactiveEvents(token)])
+               .then(([activeEvents, inactiveEvents]) => {
+                   this.setState({
+                       activeEvents:   activeEvents.data,
+                       inactiveEvents: inactiveEvents.data,
+                       isLoaded:       true
+                   });
+
+                   SuccessNotification("Bijgewerkt!");
+               });
+    };
 
     /**
      * Deletes Event
@@ -22,9 +66,8 @@ class EventList extends React.Component {
         SuccessNotification(deletedEvent.data.eventName + "is verwijderd!");
     };
 
-    render() {
-        const {user} = this.props.userData;
 
+    render() {
         return (
             <>
                 <PanelHeader size="sm"/>
@@ -49,7 +92,7 @@ class EventList extends React.Component {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {user.events ? user.events.map((value, index) => (
+                                        {this.state.activeEvents ? this.state.activeEvents.map((value, index) => (
                                             <tr key={index}>
                                                 <td>{value.eventName}</td>
                                                 <td>{new Date(value.eventStart).toLocaleString()}</td>
@@ -78,9 +121,9 @@ class EventList extends React.Component {
                                             <td className="text-center">
                                                 <a href="#"
                                                    className="btn-round btn-outline-default btn-icon btn btn-default"
-                                                   style={{margin: "0px 5px"}} onClick={(e) => {
+                                                   style={{margin: "0px 5px"}} onClick={async (e) => {
                                                     e.preventDefault();
-                                                    this.props.getUser(this.props.authData.token);
+                                                    await this.refresh();
                                                 }}>
                                                     <i className="now-ui-icons loader_refresh"></i>
                                                 </a>
@@ -96,6 +139,39 @@ class EventList extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
+                        <Col xs={12}>
+                            <Card className="card-plain">
+                                <CardHeader>
+                                    <CardTitle tag="h4">Afgelopen evenementen</CardTitle>
+                                    <p className="category"> Evenementen die u hebt gehad</p>
+                                </CardHeader>
+                                <CardBody>
+
+                                    <Table responsive>
+                                        <thead className="text-primary">
+                                        <tr>
+                                            <th>Naam</th>
+                                            <th>Start tijd/datum</th>
+                                            <th>Eind tijd/datum</th>
+                                            <th>Locatie</th>
+                                            <th className="text-center">Bezoekers</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {this.state.inactiveEvents ? this.state.inactiveEvents.map((value, index) => (
+                                            <tr key={index}>
+                                                <td>{value.eventName}</td>
+                                                <td>{new Date(value.eventStart).toLocaleString()}</td>
+                                                <td>{new Date(value.eventEnd).toLocaleString()}</td>
+                                                <td>{value.eventLocation}</td>
+                                                <td className="text-center">50</td>
+                                            </tr>
+                                        )) : "U hebt nog geen evenementen."}
+                                        </tbody>
+                                    </Table>
+                                </CardBody>
+                            </Card>
+                        </Col>
                     </Row>
                 </div>
             </>
@@ -104,15 +180,18 @@ class EventList extends React.Component {
 }
 
 EventList.propTypes = {
-    deleteEvent: PropTypes.func.isRequired,
-    getUser:     PropTypes.func.isRequired,
-    userData:    PropTypes.object.isRequired,
-    authData:    PropTypes.object.isRequired
+    deleteEvent:       PropTypes.func.isRequired,
+    getActiveEvents:   PropTypes.func.isRequired,
+    getInactiveEvents: PropTypes.func.isRequired,
+    getUser:           PropTypes.func.isRequired,
+    userData:          PropTypes.object.isRequired,
+    authData:          PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    userData: state.userData,
-    authData: state.authData,
+    userData:  state.userData,
+    authData:  state.authData,
+    eventData: state.eventData,
 });
 
-export default connect(mapStateToProps, {getUser, deleteEvent})(EventList);
+export default connect(mapStateToProps, {getUser, getActiveEvents, getInactiveEvents, deleteEvent})(EventList);

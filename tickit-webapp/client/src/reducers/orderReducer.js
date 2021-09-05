@@ -1,4 +1,4 @@
-import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, GET_PAYMENT_URL, LOADING_ORDER, UPDATE_ORDER} from "../actions/types";
+import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, GET_PAYMENT_URL, LOADING_ORDER, ORDER_REPORT_DAILY, ORDER_REPORT_MONTHLY, ORDER_REPORT_YEARLY, UPDATE_ORDER} from "../actions/types";
 
 const initialState = {
     order:   {},
@@ -25,7 +25,6 @@ export default function (state = initialState, action) {
                 orders:  action.payload,
                 loading: false
             };
-
         case ADD_ORDER:
             return {
                 order:   action.payload,
@@ -39,6 +38,21 @@ export default function (state = initialState, action) {
         case DELETE_ORDER:
             return {
                 ...state,
+                loading: false
+            };
+        case ORDER_REPORT_DAILY:
+            return {
+                order:   action.payload,
+                loading: false
+            };
+        case ORDER_REPORT_MONTHLY:
+            return {
+                order:   action.payload,
+                loading: false
+            };
+        case ORDER_REPORT_YEARLY:
+            return {
+                order:   action.payload,
                 loading: false
             };
         case LOADING_ORDER:

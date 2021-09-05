@@ -6,28 +6,46 @@ import PropTypes from "prop-types";
 import {Card, CardBody, CardHeader, Col, Row} from "reactstrap";
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.jsx";
-import {NotificationContainer, SuccessNotification, WarningNotification} from "../../components/Notifications/Notifications";
+import {NotificationContainer} from "../../components/Notifications/Notifications";
 import {saveAs} from "file-saver"
 
 class OrderRead extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            order:          [],
+            paymentDetails: {}
+        }
+
     }
 
-    componentWillMount() {
-        if (this.props.getOrder(localStorage.getItem("auth-token"), this.props.match.params.id)) {
-            SuccessNotification("Bestelling is ingeladen")
-        } else {
-            WarningNotification("Er is iets mis gegaan.")
-        }
+    /**
+     * Initialise state
+     */
+    componentDidMount() {
+        const token = this.props.authData.token; // User token
+
+        Promise.all([this.props.getOrder(token, this.props.match.params.id)])
+               .then(([order]) => {
+                   this.setState({
+                       order:          order.data,
+                       paymentDetails: order.data.paymentDetails
+                   });
+               });
+    }
+
+
+    destructurePaymentDetails(paymentDetailsObj) {
+        Object.entries(paymentDetailsObj).forEach(
+            ([key, value]) => console.log(key, value)
+        );
     }
 
 
     render() {
-        const {order} = this.props.orderData;
 
-        console.log(order);
+        console.log(this.state.paymentDetails);
 
         return (
             <>
@@ -49,14 +67,14 @@ class OrderRead extends React.Component {
                                                 className="avatar border-gray"
                                                 src={require("assets/img/user-male.png")}
                                             />
-                                            <h5 className="title">{order.firstName != undefined && order.lastName != undefined ? order.firstName + " " + order.lastName : ""}</h5>
+                                            <h5 className="title">{this.state.order.firstName + " " + this.state.order.lastName}</h5>
                                         </a>
 
-                                        <p className="description">{order._id}</p>
+                                        <p className="description">{this.state.order._id}</p>
 
                                         <hr/>
 
-                                        <a href={"mailto:" + order.email}
+                                        <a href={"mailto:" + this.state.order.email}
                                            className="btn-round btn-outline-success btn-icon btn btn-default"
                                            style={{margin: "0px 5px"}}>
                                             <i className="now-ui-icons ui-1_email-85"></i>
@@ -80,13 +98,30 @@ class OrderRead extends React.Component {
                                     <h5 className="title">Informatie</h5>
                                 </CardHeader>
                                 <CardBody>
-
                                     <div className="typography-line">
                                         <span>Email</span>
                                         <p className="text-muted">
-                                            {order.email != undefined ? order.email : ""}
+                                            {this.state.order.email}
                                         </p>
                                     </div>
+                                </CardBody>
+                            </Card>
+                            <Card>
+                                <CardHeader>
+                                    <h5 className="title">Betaling</h5>
+                                </CardHeader>
+                                <CardBody>
+
+
+                                    {this.state.paymentDetails ? this.destructurePaymentDetails(this.state.paymentDetails) : ""}
+
+                                    <div className="typography-line">
+                                        <span>sfds</span>
+                                        <p className="text-muted">
+                                            34
+                                        </p>
+                                    </div>
+
                                 </CardBody>
                             </Card>
                         </Col>

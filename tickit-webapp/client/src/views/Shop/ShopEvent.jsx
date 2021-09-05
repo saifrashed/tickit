@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {getEvent} from "../../actions/eventActions";
 import {addOrder} from "../../actions/orderActions";
 import PropTypes from "prop-types";
-import {NotificationContainer} from "../../components/Notifications/Notifications";
+import {NotificationContainer, SuccessNotification, WarningNotification} from "../../components/Notifications/Notifications";
 import Footer from "../../components/Footer/Footer"
 
 /**
@@ -21,9 +21,17 @@ class ShopEvent extends React.Component {
         }
     }
 
-    componentWillMount() {
-        this.props.getEvent(this.props.match.params.id);
-        this.calculateTotals();
+    componentDidMount() {
+        Promise.all([this.props.getEvent(this.props.match.params.id)])
+               .then(([event]) => {
+                   this.calculateTotals();
+
+                   if (event.data[0].ticketVariants.length) {
+                       SuccessNotification("Koop hier uw tickets!");
+                   } else {
+                       WarningNotification("Er zijn geen tickets in verkoop");
+                   }
+               });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -51,8 +59,7 @@ class ShopEvent extends React.Component {
         };
 
         const newOrder = await this.props.addOrder(body);
-
-        window.location.href = "../checkout/" + newOrder.data._id;
+        this.props.history.push("../checkout/" + newOrder.data._id);
 
     };
 
@@ -63,14 +70,17 @@ class ShopEvent extends React.Component {
      */
     updateOrder = (ticketVariantId, e) => {
 
+
         var targetVariant = this.props.eventData.event.ticketVariants.filter(obj => {
             return obj._id === ticketVariantId;
         });
 
+        var quantityItem;
+
         if (isNaN(e.target.value)) {
-            var quantityItem = 0
+            quantityItem = 0
         } else {
-            var quantityItem = e.target.value
+            quantityItem = e.target.value
         }
 
         const order = {
@@ -160,7 +170,7 @@ class ShopEvent extends React.Component {
 
                         <div className="content">
                             <div className="row">
-                                <div className="col-md-12 col-lg-8 pr-0">
+                                <div className="col-md-12 col-lg-8">
                                     <div className="event-image"
                                          style={{backgroundImage: "url(" + event.eventImage + ")"}}>
                                     </div>
@@ -220,7 +230,7 @@ class ShopEvent extends React.Component {
                                     </div>
                                 </div>
 
-                                <div className="col-md-12 col-lg-4 pl-0">
+                                <div className="col-md-12 col-lg-4">
                                     <div className="summary">
                                         <h3>Betaal overzicht</h3>
 

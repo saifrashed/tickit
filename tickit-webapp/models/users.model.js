@@ -45,11 +45,7 @@ const UsersSchema = new Schema({
         type:     String,
         required: true
     },
-    mollieKey:        {
-        type:     String,
-        required: false
-    },
-    mollieCustomerId: {
+    IBAN:        {
         type:     String,
         required: false
     },

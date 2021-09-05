@@ -35,7 +35,7 @@ export default function ({navigation}) {
 
             const scanResult = await axios.get("https://tickit.vorm.tech/users/", {headers: {"x-auth-token": data}});
 
-            auth.login(scanResult.data[0]);
+            auth.login(scanResult.data[0], data);
 
         } catch (err) {
             alert("Foute code!");

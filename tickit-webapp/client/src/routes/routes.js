@@ -36,20 +36,6 @@ var dashRoutes = [
         layout:    "/admin"
     },
     {
-        path:      "/icons",
-        name:      "Icons",
-        icon:      "design_image",
-        component: Icons,
-        layout:    "/admin"
-    },
-    {
-        path:      "/typography",
-        name:      "Typography",
-        icon:      "design-2_ruler-pencil",
-        component: Typography,
-        layout:    "/admin"
-    },
-    {
         pro:       true,
         path:      "/upgrade",
         name:      "informatie",

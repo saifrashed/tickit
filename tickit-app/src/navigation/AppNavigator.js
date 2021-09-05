@@ -19,21 +19,6 @@ import Login from "../screens/auth/Login";
 import LoginScan from "../screens/auth/LoginScan";
 import {AuthContext} from "../provider/AuthProvider";
 
-// Better put your these secret keys in .env file
-const firebaseConfig = {
-    apiKey:            "",
-    authDomain:        "",
-    databaseURL:       "",
-    projectId:         "",
-    storageBucket:     "",
-    messagingSenderId: "",
-    appId:             "",
-};
-
-if (firebase.apps.length === 0) {
-    firebase.initializeApp(firebaseConfig);
-}
-
 const AuthStack = createStackNavigator();
 const Auth      = () => {
     return (
