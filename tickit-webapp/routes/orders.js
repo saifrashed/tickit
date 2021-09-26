@@ -233,7 +233,7 @@ router.route('/checkout/:id').get(async (req, res) => {
             },
             description: 'TICKIT TICKETS',
             redirectUrl: process.env.BASE_URL + '/shop/confirmation/' + req.params.id,
-            webhookUrl:  'https://tickit.vorm.tech/orders/webhook',
+            webhookUrl:  process.env.BASE_URL + '/orders/webhook',
             metadata:    req.params.id
         });
 
