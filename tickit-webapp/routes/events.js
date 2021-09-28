@@ -4,6 +4,7 @@ const multer   = require('multer');
 const auth     = require('../middleware/auth');
 const Events   = require('../models/events.model');
 const moment   = require('moment');
+let Orders         = require('../models/orders.model');
 
 
 /**
@@ -20,43 +21,6 @@ router.route('/').get(auth, async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
-
-// /**
-//  * Event sold tickets amount
-//  */
-// router.route('/report/sold').get(async (req, res) => {
-//     try {
-//
-//         const soldEvents = await Events.aggregate([{
-//             $lookup: {
-//                 from: 'ticketvariants',
-//                 localField: '_id',
-//                 foreignField: 'event',
-//                 as: 'ticketvariants'
-//             }
-//         }, {
-//             $unwind: {
-//                 path: "$ticketvariants",
-//                 preserveNullAndEmptyArrays: true
-//             }
-//         }, {
-//             $lookup: {
-//                 from: 'tickets',
-//                 localField: 'tickitvariants._id',
-//                 foreignField: 'ticketVariant',
-//                 as: 'tickets'
-//             }
-//         }]);
-//
-//         console.log(soldEvents);
-//
-//         res.json(soldEvents);
-//     } catch (err) {
-//         res.status(500).json({error: err.message});
-//     }
-// });
-
-
 
 
 /**

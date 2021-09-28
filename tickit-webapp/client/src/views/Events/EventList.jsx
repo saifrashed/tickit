@@ -154,7 +154,6 @@ class EventList extends React.Component {
                                             <th>Start tijd/datum</th>
                                             <th>Eind tijd/datum</th>
                                             <th>Locatie</th>
-                                            <th className="text-center">Bezoekers</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -164,7 +163,6 @@ class EventList extends React.Component {
                                                 <td>{new Date(value.eventStart).toLocaleString()}</td>
                                                 <td>{new Date(value.eventEnd).toLocaleString()}</td>
                                                 <td>{value.eventLocation}</td>
-                                                <td className="text-center">50</td>
                                             </tr>
                                         )) : "U hebt nog geen evenementen."}
                                         </tbody>

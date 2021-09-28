@@ -13,6 +13,12 @@ const TicketsSchema = new Schema({
         required: [true, "can't be blank"],
         ref:      'TicketVariants'
     },
+
+    event: {
+        type:     mongoose.Schema.Types.ObjectId,
+        required: [true, "can't be blank"],
+        ref:      'Events'
+    },
     order:         {
         type:     mongoose.Schema.Types.ObjectId,
         required: [true, "can't be blank"],

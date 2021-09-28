@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {KeyboardAvoidingView, StyleSheet, View} from "react-native";
 import {BarCodeScanner} from 'expo-barcode-scanner';
-import {Button, Layout, Text, useTheme,} from "react-native-rapi-ui";
+import {Layout, Text, useTheme,} from "react-native-rapi-ui";
 import axios from "axios";
 import {AuthContext} from "../../provider/AuthProvider";
 
@@ -35,13 +35,11 @@ export default function ({navigation}) {
 
             const scanResult = await axios.get("https://tickit.vorm.tech/users/", {headers: {"x-auth-token": data}});
 
-            console.log(scanResult)
-
-            // auth.login(scanResult.data[0], data);
+            auth.login(scanResult.data[0], data);
 
         } catch (err) {
             // alert("Foute code!");
-            // setScanned(false);
+            setScanned(false);
         }
     };
 
@@ -88,7 +86,7 @@ const styles  = StyleSheet.create({
         backgroundColor: opacity
     },
     focused:     {
-        flex: 2,
+        flex:         2,
         borderRadius: 10,
 
         borderWidth: 1,

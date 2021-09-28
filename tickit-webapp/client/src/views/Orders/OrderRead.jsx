@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {getOrder} from "../../actions/orderActions";
+import {getOrder, resendOrder} from "../../actions/orderActions";
 import PropTypes from "prop-types";
 // reactstrap components
 import {Card, CardBody, CardHeader, Col, Row} from "reactstrap";
@@ -34,14 +34,6 @@ class OrderRead extends React.Component {
                    });
                });
     };
-
-
-    destructurePaymentDetails(paymentDetailsObj) {
-        Object.entries(paymentDetailsObj).forEach(
-            ([key, value]) => console.log(key, value)
-        );
-    }
-
 
     render() {
 
@@ -85,7 +77,8 @@ class OrderRead extends React.Component {
 
                                         <button className="btn-round btn-outline-success btn-icon btn btn-default"
                                                 style={{margin: "0px 5px"}} onClick={(e) => {
-                                            e.preventDefault()
+                                            e.preventDefault();
+                                            this.props.resendOrder({id: this.props.orderData.order.paymentDetails.id})
                                         }}>
 
                                             <i className="now-ui-icons ui-1_send single-copy-04"></i>
@@ -161,10 +154,11 @@ class OrderRead extends React.Component {
 }
 
 OrderRead.propTypes = {
-    getOrder:  PropTypes.func.isRequired,
-    userData:  PropTypes.object.isRequired,
-    authData:  PropTypes.object.isRequired,
-    orderData: PropTypes.object.isRequired
+    getOrder:    PropTypes.func.isRequired,
+    resendOrder: PropTypes.func.isRequired,
+    userData:    PropTypes.object.isRequired,
+    authData:    PropTypes.object.isRequired,
+    orderData:   PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -173,4 +167,4 @@ const mapStateToProps = (state) => ({
     orderData: state.orderData,
 });
 
-export default connect(mapStateToProps, {getOrder})(OrderRead);
+export default connect(mapStateToProps, {getOrder, resendOrder})(OrderRead);

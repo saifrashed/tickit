@@ -83,8 +83,6 @@ router.route('/report/daily').get(auth, async (req, res) => {
             ]
         );
 
-        console.log(orders);
-
         res.json(orders);
     } catch (err) {
         res.status(500).json({error: err.message});
@@ -271,20 +269,18 @@ router.route('/webhook').post(async (req, res) => {
                 // Create new tickets in the database based on the order.
                 for (let index = 0; index < product.quantity; index++) {
 
-                    console.log(product);
-
                     const newTicket = new Tickets({
                         validated:     false,
                         ticketVariant: product.ticketVariant._id,
+                        event:         product.ticketVariant.event,
                         order:         order._id
                     });
 
+
                     const ticketEvent   = await Events.findById(product.ticketVariant.event);
                     const ticketVariant = await TicketVariants.findById(product.ticketVariant._id);
-
-
-                    const savedTicket = await newTicket.save();
-                    const QRCodeURL   = await QRCode.toDataURL(savedTicket.id);
+                    const savedTicket   = await newTicket.save();
+                    const QRCodeURL     = await QRCode.toDataURL(savedTicket.id);
 
                     pdfHTML += ticketTemplate(order, ticketEvent, ticketVariant, QRCodeURL);
                 }
@@ -330,7 +326,6 @@ router.route('/webhook').post(async (req, res) => {
     }
 });
 
-
 /**
  * Get payment data
  */
@@ -356,7 +351,6 @@ router.route('/payments').get(auth, async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
-
 
 /**
  * Get all orders.
@@ -407,7 +401,6 @@ router.route('/user/').get(auth, async (req, res) => {
     }
 });
 
-
 /**
  * Get a single order.
  */
@@ -420,7 +413,6 @@ router.route('/:id').get(async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
-
 
 /**
  * Add an order
@@ -437,7 +429,6 @@ router.route('/add').post(async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
-
 
 /**
  * Update an order

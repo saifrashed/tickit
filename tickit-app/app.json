@@ -17,6 +17,10 @@
 		"ios": {
 			"supportsTablet": false
 		},
+		"android": {
+			"package": "com.vorm.tickit",
+			"versionCode": 1
+		},
 		"web": {
 			"favicon": "./assets/favicon.png"
 		}

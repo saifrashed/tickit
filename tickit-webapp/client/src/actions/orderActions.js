@@ -1,6 +1,6 @@
 import axios from "axios";
 import {saveAs} from "file-saver"
-import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, GET_PAYMENT_URL, LOADING_ORDER, ORDER_REPORT_DAILY, ORDER_REPORT_MONTHLY, ORDER_REPORT_YEARLY, UPDATE_ORDER} from "./types";
+import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, GET_PAYMENT_URL, LOADING_ORDER, ORDER_REPORT_DAILY, ORDER_REPORT_MONTHLY, ORDER_REPORT_YEARLY, RESEND_ORDER, UPDATE_ORDER} from "./types";
 
 export const getOrder = (token, id) => async dispatch => {
     dispatch(setOrderLoading());
@@ -66,6 +66,18 @@ export const deleteOrder = (token, id) => async dispatch => {
     });
 
     return deletedOrder
+};
+
+export const resendOrder = (body) => async dispatch => {
+    dispatch(setOrderLoading());
+    const resendOrder = await axios.post("/orders/webhook", body);
+
+    dispatch({
+        type:    RESEND_ORDER,
+        payload: resendOrder.data
+    });
+
+    return resendOrder
 };
 
 export const toPayment = (id) => async dispatch => {

@@ -216,7 +216,7 @@ module.exports = (order) => {
                               Aantal
                             </th>
                             <th style='text-align: right; border-bottom: 1px solid #cccccc; color: #4d4d4d; font-weight: 700; padding-bottom: 5px; ' width='15%'>
-                              Totaal
+                              Bedrag
                             </th>
                           </tr>
                         </table>
@@ -280,7 +280,7 @@ module.exports = (order) => {
                             </td>
                             <td style='text-align: right; border-top: 1px solid #cccccc;'>
                               <span style='padding:8px 0px; display: inline-block;'>
-                                €`+parseFloat(order.subTotal).toFixed(2)+`
+                                €` + parseFloat(order.subTotal).toFixed(2) + `
                               </span>
                               <br />
                               <span style='padding-bottom:8px; display: inline-block;'>
@@ -288,7 +288,7 @@ module.exports = (order) => {
                               </span>
                               <br />
                               <span style='display: inline-block;font-weight: bold; color: #4d4d4d'>
-                                €`+parseFloat(order.total).toFixed(2)+`
+                                €` + parseFloat(order.total).toFixed(2) + `
                               </span>
                             </td>
                           </tr>

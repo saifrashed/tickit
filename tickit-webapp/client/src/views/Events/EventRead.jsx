@@ -296,7 +296,6 @@ class EventRead extends React.Component {
                                             <th>Prijs</th>
                                             <th>Verkoop</th>
                                             <th>Personen</th>
-                                            <th>Verkocht</th>
                                             <th className="text-center">Acties</th>
                                         </tr>
                                         </thead>
@@ -307,7 +306,6 @@ class EventRead extends React.Component {
                                                 <td>{this.formatPrice(value.price)}</td>
                                                 <td>{value.availability ? "Verkrijgbaar" : "Niet verkrijgbaar"}</td>
                                                 <td>{value.personsAmount}</td>
-                                                <td>0</td>
                                                 <td className="text-center">
                                                     <a
                                                         href={"./ticketvariant/" + this.props.match.params.id + "/" + value._id}
@@ -329,7 +327,7 @@ class EventRead extends React.Component {
                                             <td></td>
                                         </tr>)}
                                         <tr>
-                                            <td colSpan="5"></td>
+                                            <td colSpan="4"></td>
                                             <td className="text-center">
                                                 <a href="#"
                                                    className="btn-round btn-outline-default btn-icon btn btn-default"
