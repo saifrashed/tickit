@@ -1,6 +1,6 @@
 import React from "react";
 // reactstrap components
-import {Button, Card, CardBody, CardHeader, Col, Form, FormGroup, Input, Row} from "reactstrap";
+import {Card, CardBody, CardHeader, Col, Form, FormGroup, Input, Row} from "reactstrap";
 // components
 import PanelHeader from "components/PanelHeader/PanelHeader.jsx";
 import {ErrorNotification, NotificationContainer, SuccessNotification} from "../../components/Notifications/Notifications";
@@ -152,35 +152,6 @@ class User extends React.Component {
                                     </div>
                                 </CardBody>
                                 <hr/>
-                                <div className="button-container">
-                                    <Button
-                                        className="btn-neutral btn-icon btn-round"
-                                        color="default"
-                                        href="#pablo"
-                                        onClick={e => e.preventDefault()}
-                                        size="lg"
-                                    >
-                                        <i className="fab fa-facebook-f"/>
-                                    </Button>
-                                    <Button
-                                        className="btn-neutral btn-icon btn-round"
-                                        color="default"
-                                        href="#pablo"
-                                        onClick={e => e.preventDefault()}
-                                        size="lg"
-                                    >
-                                        <i className="fab fa-twitter"/>
-                                    </Button>
-                                    <Button
-                                        className="btn-neutral btn-icon btn-round"
-                                        color="default"
-                                        href="#pablo"
-                                        onClick={e => e.preventDefault()}
-                                        size="lg"
-                                    >
-                                        <i className="fab fa-google-plus-g"/>
-                                    </Button>
-                                </div>
                             </Card>
                         </Col>
                         <Col md="8">

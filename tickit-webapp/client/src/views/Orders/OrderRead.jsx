@@ -33,7 +33,7 @@ class OrderRead extends React.Component {
                        paymentDetails: order.data.paymentDetails
                    });
                });
-    }
+    };
 
 
     destructurePaymentDetails(paymentDetailsObj) {
@@ -45,7 +45,9 @@ class OrderRead extends React.Component {
 
     render() {
 
-        console.log(this.state.paymentDetails);
+        if (this.props.orderData.order.paymentDetails != null) {
+            console.log(this.props.orderData.order.paymentDetails);
+        }
 
         return (
             <>
@@ -113,14 +115,40 @@ class OrderRead extends React.Component {
                                 <CardBody>
 
 
-                                    {this.state.paymentDetails ? this.destructurePaymentDetails(this.state.paymentDetails) : ""}
+                                    {this.props.orderData.order.paymentDetails != null ? (
+                                        <div>
+                                            <div className="typography-line">
+                                                <span>Bedrag</span>
+                                                <p className="text-muted">
+                                                    {this.props.orderData.order.paymentDetails.amount.value} {this.props.orderData.order.paymentDetails.amount.currency}
+                                                </p>
+                                            </div>
 
-                                    <div className="typography-line">
-                                        <span>sfds</span>
-                                        <p className="text-muted">
-                                            34
-                                        </p>
-                                    </div>
+                                            <div className="typography-line">
+                                                <span>Datum</span>
+                                                <p className="text-muted">
+                                                    {new Date(this.props.orderData.order.paymentDetails.paidAt).toLocaleString()}
+                                                </p>
+                                            </div>
+
+                                            <div className="typography-line">
+                                                <span>Betalingsmethode</span>
+                                                <p className="text-muted">
+                                                    {this.props.orderData.order.paymentDetails.method}
+                                                </p>
+                                            </div>
+
+                                            <div className="typography-line">
+                                                <span>Mollie betaal ID</span>
+                                                <p className="text-muted">
+                                                    {this.props.orderData.order.paymentDetails.id}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                         <p>Loading</p>
+                                     )}
+
 
                                 </CardBody>
                             </Card>

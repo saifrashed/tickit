@@ -50,7 +50,7 @@ class FixedPlugin extends Component {
                             <a
                                 href="#"
                                 target="_blank"
-                                className="btn btn-warning btn-block btn-round"
+                                className="btn btn-warning btn-block btn-round disabled"
                             >
                                 Download Android app
                             </a>
@@ -62,7 +62,8 @@ class FixedPlugin extends Component {
                                 Download IOS app
                             </a>
                             <a
-                                href="https://www.vorm.tech/applicaties/tickit"
+                                target="_blank"
+                                href="https://www.vorm.tech/contact"
                                 className="btn btn-block btn-round btn-info"
                             >
                                 Contact

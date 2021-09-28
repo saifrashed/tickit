@@ -22,6 +22,44 @@ router.route('/').get(auth, async (req, res) => {
 });
 
 /**
+ * Event sold tickets amount
+ */
+router.route('/report/sold').get(async (req, res) => {
+    try {
+
+        const soldEvents = await Events.aggregate([{
+            $lookup: {
+                from: 'ticketvariants',
+                localField: '_id',
+                foreignField: 'event',
+                as: 'ticketvariants'
+            }
+        }, {
+            $unwind: {
+                path: "$ticketvariants",
+                preserveNullAndEmptyArrays: true
+            }
+        }, {
+            $lookup: {
+                from: 'tickets',
+                localField: 'tickitvariants._id',
+                foreignField: 'ticketVariant',
+                as: 'tickets'
+            }
+        }]);
+
+        console.log(soldEvents);
+
+        res.json(soldEvents);
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+});
+
+
+
+
+/**
  * Event read active
  */
 router.route('/active').get(auth, async (req, res) => {

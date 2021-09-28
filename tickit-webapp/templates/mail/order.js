@@ -108,7 +108,7 @@ module.exports = (order) => {
                                             <tr>
                                               <td align='left'>
                                                 <a href='#'>
-                                                  <img align='left' alt='Logo' height='33' padding='5px' src='https://tickit.vorm.tech/static/media/tickit_logo.4ceda3b7.png' width='120' />
+                                                  <img align='left' alt='Logo' height='33' padding='5px' src='http://tickit.vorm.tech/static/media/tickit_logo.4ceda3b7.png' width='120' />
                                                 </a>
                                               </td>
                                               <td align='right' style='vertical-align:bottom;' width='34px'>

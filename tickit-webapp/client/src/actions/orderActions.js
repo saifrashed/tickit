@@ -1,6 +1,6 @@
 import axios from "axios";
 import {saveAs} from "file-saver"
-import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, GET_PAYMENT_URL, LOADING_ORDER, UPDATE_ORDER, ORDER_REPORT_DAILY, ORDER_REPORT_MONTHLY, ORDER_REPORT_YEARLY} from "./types";
+import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, GET_PAYMENT_URL, LOADING_ORDER, ORDER_REPORT_DAILY, ORDER_REPORT_MONTHLY, ORDER_REPORT_YEARLY, UPDATE_ORDER} from "./types";
 
 export const getOrder = (token, id) => async dispatch => {
     dispatch(setOrderLoading());
@@ -114,7 +114,6 @@ export const getYearlyOrderReport = (token) => async dispatch => {
 
     return report;
 };
-
 
 
 export const setOrderLoading = () => {

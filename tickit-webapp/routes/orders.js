@@ -232,19 +232,16 @@ router.route('/checkout/:id').get(async (req, res) => {
                 currency: 'EUR'
             },
             description: 'TICKIT TICKETS',
-            redirectUrl: process.env.BASE_URL + '/shop/confirmation/' + req.params.id,
-            webhookUrl:  process.env.BASE_URL + '/orders/webhook',
+            redirectUrl: 'https://tickit.vorm.tech/shop/confirmation/' + req.params.id,
+            webhookUrl:  'https://tickit.vorm.tech/orders/webhook',
             metadata:    req.params.id
         });
 
         order.paymentId = payment.id;
-
-
         order.save();
 
         res.json(payment.getPaymentUrl())
-    } catch
-        (err) {
+    } catch (err) {
         res.status(500).json({error: err.message});
     }
 });
@@ -273,6 +270,8 @@ router.route('/webhook').post(async (req, res) => {
 
                 // Create new tickets in the database based on the order.
                 for (let index = 0; index < product.quantity; index++) {
+
+                    console.log(product);
 
                     const newTicket = new Tickets({
                         validated:     false,

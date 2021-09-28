@@ -81,80 +81,80 @@ class Dashboard extends React.Component {
                 />
 
                 <div className="content">
-                    <Row>
-                        <Col xs={12} md={6}>
-                            <Card className="card-chart">
-                                <CardHeader>
-                                    <h5 className="card-category">Maandelijkse totalen</h5>
-                                    <CardTitle tag="h4">Omzet</CardTitle>
-                                    <UncontrolledDropdown>
-                                        <DropdownToggle
-                                            className="btn-round btn-outline-default btn-icon"
-                                            color="default"
-                                        >
-                                            <i className="now-ui-icons loader_gear"/>
-                                        </DropdownToggle>
-                                        <DropdownMenu right>
-                                            <DropdownItem>Netto omzet (Exclusief Servicekosten & BTW)</DropdownItem>
-                                            <DropdownItem>Bruto omzet (Inclusief Servicekosten & BTW))</DropdownItem>
-                                        </DropdownMenu>
-                                    </UncontrolledDropdown>
-                                </CardHeader>
-                                <CardBody>
-                                    <div className="chart-area">
-                                        <Line
-                                            data={dashboardMonthlyPerformanceChart(this.state.dashboardProfitPerformanceChart).data}
-                                            options={dashboardMonthlyPerformanceChart(this.state.dashboardProfitPerformanceChart).options}
-                                        />
-                                    </div>
-                                </CardBody>
-                                <CardFooter>
-                                    <div className="stats">
-                                        <i className="now-ui-icons arrows-1_refresh-69"/> Zojuist geupdate
-                                    </div>
-                                </CardFooter>
-                            </Card>
-                        </Col>
-                        <Col xs={12} md={6}>
-                            <Card className="card-chart">
-                                <CardHeader>
-                                    <h5 className="card-category">Maandelijkse totalen</h5>
-                                    <CardTitle tag="h4">Check-in</CardTitle>
-                                </CardHeader>
-                                <CardBody>
-                                    <div className="chart-area">
-                                        <Bar
-                                            data={dashboardMonthlyPerformanceChart(this.state.dashboardProfitPerformanceChart).data}
-                                            options={dashboardMonthlyPerformanceChart(this.state.dashboardProfitPerformanceChart).options}
-                                        />
-                                    </div>
-                                </CardBody>
-                                <CardFooter>
-                                    <div className="stats">
-                                        <i className="now-ui-icons arrows-1_refresh-69"/> Zojuist geupdate
-                                    </div>
-                                </CardFooter>
-                            </Card>
-                        </Col>
-                    </Row>
+                    {/*<Row>*/}
+                        {/*<Col xs={12} md={6}>*/}
+                            {/*<Card className="card-chart">*/}
+                                {/*<CardHeader>*/}
+                                    {/*<h5 className="card-category">Maandelijkse totalen</h5>*/}
+                                    {/*<CardTitle tag="h4">Omzet</CardTitle>*/}
+                                    {/*<UncontrolledDropdown>*/}
+                                        {/*<DropdownToggle*/}
+                                            {/*className="btn-round btn-outline-default btn-icon"*/}
+                                            {/*color="default"*/}
+                                        {/*>*/}
+                                            {/*<i className="now-ui-icons loader_gear"/>*/}
+                                        {/*</DropdownToggle>*/}
+                                        {/*<DropdownMenu right>*/}
+                                            {/*<DropdownItem>Netto omzet (Exclusief Servicekosten & BTW)</DropdownItem>*/}
+                                            {/*<DropdownItem>Bruto omzet (Inclusief Servicekosten & BTW))</DropdownItem>*/}
+                                        {/*</DropdownMenu>*/}
+                                    {/*</UncontrolledDropdown>*/}
+                                {/*</CardHeader>*/}
+                                {/*<CardBody>*/}
+                                    {/*<div className="chart-area">*/}
+                                        {/*<Line*/}
+                                            {/*data={dashboardMonthlyPerformanceChart(this.state.dashboardProfitPerformanceChart).data}*/}
+                                            {/*options={dashboardMonthlyPerformanceChart(this.state.dashboardProfitPerformanceChart).options}*/}
+                                        {/*/>*/}
+                                    {/*</div>*/}
+                                {/*</CardBody>*/}
+                                {/*<CardFooter>*/}
+                                    {/*<div className="stats">*/}
+                                        {/*<i className="now-ui-icons arrows-1_refresh-69"/> Zojuist geupdate*/}
+                                    {/*</div>*/}
+                                {/*</CardFooter>*/}
+                            {/*</Card>*/}
+                        {/*</Col>*/}
+                        {/*<Col xs={12} md={6}>*/}
+                            {/*<Card className="card-chart">*/}
+                                {/*<CardHeader>*/}
+                                    {/*<h5 className="card-category">Maandelijkse totalen</h5>*/}
+                                    {/*<CardTitle tag="h4">Check-in</CardTitle>*/}
+                                {/*</CardHeader>*/}
+                                {/*<CardBody>*/}
+                                    {/*<div className="chart-area">*/}
+                                        {/*<Bar*/}
+                                            {/*data={dashboardMonthlyPerformanceChart(this.state.dashboardProfitPerformanceChart).data}*/}
+                                            {/*options={dashboardMonthlyPerformanceChart(this.state.dashboardProfitPerformanceChart).options}*/}
+                                        {/*/>*/}
+                                    {/*</div>*/}
+                                {/*</CardBody>*/}
+                                {/*<CardFooter>*/}
+                                    {/*<div className="stats">*/}
+                                        {/*<i className="now-ui-icons arrows-1_refresh-69"/> Zojuist geupdate*/}
+                                    {/*</div>*/}
+                                {/*</CardFooter>*/}
+                            {/*</Card>*/}
+                        {/*</Col>*/}
+                    {/*</Row>*/}
                     <Row>
                         <Col xs={12} md={12}>
                             <Card className="card-chart">
                                 <CardHeader>
                                     <h5 className="card-category">dagelijkse totalen</h5>
                                     <CardTitle tag="h4">Omzet</CardTitle>
-                                    <UncontrolledDropdown>
-                                        <DropdownToggle
-                                            className="btn-round btn-outline-default btn-icon"
-                                            color="default"
-                                        >
-                                            <i className="now-ui-icons loader_gear"/>
-                                        </DropdownToggle>
-                                        <DropdownMenu right>
-                                            <DropdownItem>Netto omzet (Exclusief Servicekosten & BTW)</DropdownItem>
-                                            <DropdownItem>Bruto omzet (Inclusief Servicekosten & BTW))</DropdownItem>
-                                        </DropdownMenu>
-                                    </UncontrolledDropdown>
+                                    {/*<UncontrolledDropdown>*/}
+                                        {/*<DropdownToggle*/}
+                                            {/*className="btn-round btn-outline-default btn-icon"*/}
+                                            {/*color="default"*/}
+                                        {/*>*/}
+                                            {/*<i className="now-ui-icons loader_gear"/>*/}
+                                        {/*</DropdownToggle>*/}
+                                        {/*<DropdownMenu right>*/}
+                                            {/*<DropdownItem>Netto omzet (Exclusief Servicekosten & BTW)</DropdownItem>*/}
+                                            {/*<DropdownItem>Bruto omzet (Inclusief Servicekosten & BTW))</DropdownItem>*/}
+                                        {/*</DropdownMenu>*/}
+                                    {/*</UncontrolledDropdown>*/}
                                 </CardHeader>
                                 <CardBody>
                                     <div className="chart-area">
