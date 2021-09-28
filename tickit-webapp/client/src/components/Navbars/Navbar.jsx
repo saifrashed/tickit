@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {Collapse, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input, InputGroup, InputGroupAddon, InputGroupText, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem} from "reactstrap";
+import {Collapse, Container, Input, InputGroup, InputGroupAddon, InputGroupText, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem} from "reactstrap";
 
 import routes from "../../routes/routes.js";
 
@@ -131,7 +131,7 @@ class Header extends React.Component {
                     >
                         <form>
                             <InputGroup className="no-border">
-                                <Input placeholder="Search..."/>
+                                <Input placeholder="Zoeken..." disabled={true}/>
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText>
                                         <i className="now-ui-icons ui-1_zoom-bold"/>
@@ -141,30 +141,30 @@ class Header extends React.Component {
                         </form>
                         <Nav navbar>
                             <NavItem>
-                                <Link to="#pablo" className="nav-link">
+                                <Link to="/admin/dashboard" className="nav-link">
                                     <i className="now-ui-icons media-2_sound-wave"/>
                                     <p>
                                         <span className="d-lg-none d-md-block">Stats</span>
                                     </p>
                                 </Link>
                             </NavItem>
-                            <Dropdown
-                                nav
-                                isOpen={this.state.dropdownOpen}
-                                toggle={e => this.dropdownToggle(e)}
-                            >
-                                <DropdownToggle caret nav>
-                                    <i className="now-ui-icons location_world"/>
-                                    <p>
-                                        <span className="d-lg-none d-md-block">Some Actions</span>
-                                    </p>
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem tag="a">Action</DropdownItem>
-                                    <DropdownItem tag="a">Another Action</DropdownItem>
-                                    <DropdownItem tag="a">Something else here</DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
+                            {/*<Dropdown*/}
+                            {/*nav*/}
+                            {/*isOpen={this.state.dropdownOpen}*/}
+                            {/*toggle={e => this.dropdownToggle(e)}*/}
+                            {/*>*/}
+                            {/*<DropdownToggle caret nav>*/}
+                            {/*<i className="now-ui-icons location_world"/>*/}
+                            {/*<p>*/}
+                            {/*<span className="d-lg-none d-md-block">Some Actions</span>*/}
+                            {/*</p>*/}
+                            {/*</DropdownToggle>*/}
+                            {/*<DropdownMenu right>*/}
+                            {/*<DropdownItem tag="a">Action</DropdownItem>*/}
+                            {/*<DropdownItem tag="a">Another Action</DropdownItem>*/}
+                            {/*<DropdownItem tag="a">Something else here</DropdownItem>*/}
+                            {/*</DropdownMenu>*/}
+                            {/*</Dropdown>*/}
                             <NavItem>
                                 <Link to="/admin/profile" className="nav-link">
                                     <i className="now-ui-icons users_single-02"/>
