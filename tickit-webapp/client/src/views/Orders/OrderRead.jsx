@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import {Card, CardBody, CardHeader, Col, Row} from "reactstrap";
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.jsx";
-import {NotificationContainer} from "../../components/Notifications/Notifications";
+import {NotificationContainer, SuccessNotification} from "../../components/Notifications/Notifications";
 import {saveAs} from "file-saver"
 
 class OrderRead extends React.Component {
@@ -35,12 +35,16 @@ class OrderRead extends React.Component {
                });
     };
 
+    /**
+     * Resends the order to a the customer.
+     * @returns {Promise<void>}
+     */
+    resendOrder = async () => {
+        await this.props.resendOrder({id: this.props.orderData.order.paymentDetails.id});
+        SuccessNotification("Bestelling is verzonden naar "+this.props.orderData.order.email )
+    };
+
     render() {
-
-        if (this.props.orderData.order.paymentDetails != null) {
-            console.log(this.props.orderData.order.paymentDetails);
-        }
-
         return (
             <>
                 <PanelHeader size="sm"/>
@@ -78,7 +82,7 @@ class OrderRead extends React.Component {
                                         <button className="btn-round btn-outline-success btn-icon btn btn-default"
                                                 style={{margin: "0px 5px"}} onClick={(e) => {
                                             e.preventDefault();
-                                            this.props.resendOrder({id: this.props.orderData.order.paymentDetails.id})
+                                            this.resendOrder();
                                         }}>
 
                                             <i className="now-ui-icons ui-1_send single-copy-04"></i>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import {saveAs} from "file-saver"
-import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, GET_PAYMENT_URL, LOADING_ORDER, ORDER_REPORT_DAILY, ORDER_REPORT_MONTHLY, ORDER_REPORT_YEARLY, RESEND_ORDER, UPDATE_ORDER} from "./types";
+import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, GET_PAYMENT_URL, LOADING_ORDER, ORDER_REPORT_DAILY, ORDER_REPORT_MONTHLY, ORDER_REPORT_YEARLY, RESEND_ORDER, SEND_TO_RECIPIENT, UPDATE_ORDER} from "./types";
 
 export const getOrder = (token, id) => async dispatch => {
     dispatch(setOrderLoading());
@@ -78,6 +78,18 @@ export const resendOrder = (body) => async dispatch => {
     });
 
     return resendOrder
+};
+
+export const sendToRecipient = (token, body) => async dispatch => {
+    dispatch(setOrderLoading());
+    const recipient = await axios.post("/orders/send-to-recipient", body, {headers: {"x-auth-token": token}});
+
+    dispatch({
+        type:    SEND_TO_RECIPIENT,
+        payload: recipient.data
+    });
+
+    return recipient
 };
 
 export const toPayment = (id) => async dispatch => {

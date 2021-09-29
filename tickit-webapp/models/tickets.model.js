@@ -21,7 +21,6 @@ const TicketsSchema = new Schema({
     },
     order:         {
         type:     mongoose.Schema.Types.ObjectId,
-        required: [true, "can't be blank"],
         ref:      'Orders'
     }
 

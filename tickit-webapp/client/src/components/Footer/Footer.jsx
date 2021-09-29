@@ -11,19 +11,6 @@ class Footer extends React.Component {
                 className={"footer" + (this.props.default ? " footer-default" : "")}
             >
                 <Container fluid={this.props.fluid ? true : false}>
-                    <nav>
-                        <ul>
-                            <li>
-                                <a href="https://www.vorm.tech" target="_blank">Vorm Technologies</a>
-                            </li>
-                            <li>
-                                <a href="https://www.vorm.tech/over-vorm" target="_blank">Over ons</a>
-                            </li>
-                            <li>
-                                <a href="https://www.vorm.tech/applicaties/tickit" target="_blank">Applicatie pagina</a>
-                            </li>
-                        </ul>
-                    </nav>
                     <div className="copyright">
                         &copy; {1900 + new Date().getYear()}, {" "}
                         <a

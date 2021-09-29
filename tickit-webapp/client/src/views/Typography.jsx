@@ -138,3 +138,4 @@ class Typography extends React.Component {
 }
 
 export default Typography;
+

@@ -3,7 +3,7 @@ HTML template for ticket PDF
  */
 
 
-module.exports = (order) => {
+module.exports = (title, message) => {
 
     return `
 <!doctype html>
@@ -30,6 +30,7 @@ module.exports = (order) => {
       			  		@viewport {	width: 320px; }
       				}
     </style>
+
     <style type="text/css">
       @media only screen and (min-width:480px) {
       .dys-column-per-100 {
@@ -135,117 +136,15 @@ module.exports = (order) => {
                     <tr>
                       <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                         <div style='color:#4d4d4d;font-family:Oxygen, Helvetica neue, sans-serif;font-size:32px;font-weight:700;line-height:37px;text-align:center;'>
-                          Uw tickets
+                          `+title+`
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                         <div style='color:#777777;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:center;'>
-                          Uw factuur en tickets bevinden zich in deze mail. Veel plezier toegewenst op uw evenement namens TickIT!
+                          `+message+`
                         </div>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div style='background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;'>
-        <table align='center' border='0' cellpadding='0' cellspacing='0' role='presentation' style='background:#FFFFFF;background-color:#FFFFFF;width:100%;'>
-          <tbody>
-            <tr>
-              <td style='direction:ltr;font-size:0px;padding:20px 0;text-align:center;vertical-align:top;'>
-                <div class='dys-column-per-100 outlook-group-fix' style='direction:ltr;display:inline-block;font-size:13px;text-align:left;vertical-align:top;width:100%;'>
-                  <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='vertical-align:top;' width='100%'>
-                    <tr>
-                      <td align='left' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                        <table border='0' cellpadding='0' cellspacing='0' style="cellpadding:0;cellspacing:0;color:#777777;font-family:'Oxygen', 'Helvetica Neue', helvetica, sans-serif;font-size:14px;line-height:21px;table-layout:auto;width:100%;" width='100%'>
-                          <tr>
-                            <th style='text-align: left; border-bottom: 1px solid #cccccc; color: #4d4d4d; font-weight: 700; padding-bottom: 5px;' width='50%'>
-                              Product
-                            </th>
-                            <th style='text-align: right; border-bottom: 1px solid #cccccc; color: #4d4d4d; font-weight: 700; padding-bottom: 5px;' width='15%'>
-                              Aantal
-                            </th>
-                            <th style='text-align: right; border-bottom: 1px solid #cccccc; color: #4d4d4d; font-weight: 700; padding-bottom: 5px; ' width='15%'>
-                              Bedrag
-                            </th>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align='left' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                        <table border='0' cellpadding='0' cellspacing='0' style='cellpadding:0;cellspacing:0;color:#000000;font-family:Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;' width='100%'>
-                       
-                         ` +
-        order.products.map((product) => {
-            console.log(order);
-            return `
-                             <tr style="font-size:14px; line-height:19px; font-family: 'Oxygen', 'Helvetica Neue', helvetica, sans-serif; color:#777777">
-                            <td width='50%'>
-                              <table cellpadding='0' cellspacing='0' style="font-size:14px; line-height:19px; font-family: 'Oxygen', 'Helvetica Neue', helvetica, sans-serif;" width='100%'>
-                                <tbody>
-                                  <tr>
-                                    <td style="text-align:left; font-size:14px; line-height:19px; font-family: ' oxygen', 'helvetica neue', helvetica, sans-serif; color: #777777;">
-                                      <span style='color: #4d4d4d; font-weight:bold;'>
-                                       ` + product.ticketVariant.description + `
-                                      </span>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </td>
-                            <td style='text-align:center; ' width='10%'>
-                              ` + product.quantity + `
-                            </td>
-                            <td style='text-align:right; ' width='10%'>
-                              €` + product.ticketVariant.price + `
-                            </td>
-                          </tr>
-                         
-                         `
-        }) + `
-                        </table>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align='left' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                        <table border='0' cellpadding='0' cellspacing='0' style='cellpadding:0;cellspacing:0;color:#000000;font-family:Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;' width='100%'>
-                          <tr style="font-size:14px; line-height:19px; font-family: 'Oxygen', 'Helvetica Neue', helvetica, sans-serif; color:#777777">
-                            <td width='50%'>
-                            </td>
-                            <td style='text-align:right; padding-right: 10px; border-top: 1px solid #cccccc;'>
-                              <span style='padding:8px 0px; display: inline-block;'>
-                                Subtotaal
-                              </span>
-                              <br />
-                              <span style='padding-bottom:8px; display: inline-block;'>
-                                Servicekosten
-                              </span>
-                              <br />
-                              <span style='display: inline-block;font-weight: bold; color: #4d4d4d'>
-                                Totaal
-                              </span>
-                            </td>
-                            <td style='text-align: right; border-top: 1px solid #cccccc;'>
-                              <span style='padding:8px 0px; display: inline-block;'>
-                                €` + parseFloat(order.subTotal).toFixed(2) + `
-                              </span>
-                              <br />
-                              <span style='padding-bottom:8px; display: inline-block;'>
-                                €` + parseFloat( (order.total - order.subTotal)).toFixed(2) + `
-                              </span>
-                              <br />
-                              <span style='display: inline-block;font-weight: bold; color: #4d4d4d'>
-                                €` + parseFloat(order.total).toFixed(2) + `
-                              </span>
-                            </td>
-                          </tr>
-                        </table>
                       </td>
                     </tr>
                   </table>

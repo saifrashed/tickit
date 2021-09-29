@@ -7,8 +7,11 @@ const pdf                  = require('html-pdf');
 const mongoose             = require('mongoose');
 var QRCode                 = require('qrcode');
 
-const ticketTemplate = require('../templates/documents/ticket');
-const orderTemplate  = require('../templates/mail/order');
+const ticketTemplate      = require('../templates/documents/ticket');
+const orderTemplate       = require('../templates/mail/order');
+const standardTemplate    = require('../templates/mail/standard');
+const blankTicketTemplate = require('../templates/documents/blankTicket');
+
 
 let Orders         = require('../models/orders.model');
 let Events         = require('../models/events.model');
@@ -223,13 +226,14 @@ router.route('/checkout/:id').get(async (req, res) => {
     try {
 
         const order = await Orders.findById(req.params.id);
+        const event = await Events.findById(order.eventId);
 
         const payment = await mollieClient.payments.create({
             amount:      {
                 value:    parseFloat(order.total).toFixed(2),
                 currency: 'EUR'
             },
-            description: 'TICKIT TICKETS',
+            description: event.eventName,
             redirectUrl: 'https://tickit.vorm.tech/shop/confirmation/' + req.params.id,
             webhookUrl:  'https://tickit.vorm.tech/orders/webhook',
             metadata:    req.params.id
@@ -325,6 +329,69 @@ router.route('/webhook').post(async (req, res) => {
         res.status(500).json({error: err.message});
     }
 });
+
+/**
+ * Send tickets to a given email
+ */
+router.route('/send-to-recipient').post(auth, async (req, res) => {
+    try {
+        let {recipientFirstName, recipientLastName, recipientEmail, recipientTicketVariant, event} = req.body;
+
+        console.log(req.body);
+
+
+        // Array of ticket attachments to be send in the mail
+        let ticketAttachments = async function () {
+            const ticketVariant = await TicketVariants.findById(recipientTicketVariant);
+            const ticketEvent   = await Events.findById(event);
+
+
+            const newTicket = new Tickets({
+                validated:     false,
+                ticketVariant: ticketVariant._id,
+                event:         ticketVariant.event,
+                order:         null
+            });
+
+            const savedTicket = await newTicket.save();
+            const QRCodeURL   = await QRCode.toDataURL(savedTicket.id);
+
+            return blankTicketTemplate(recipientFirstName, recipientLastName, recipientEmail, ticketEvent, ticketVariant, QRCodeURL);
+        };
+
+
+        let ticketAttachmentHTML = await ticketAttachments();
+
+
+        // Generate PDF documents
+        pdf.create(ticketAttachmentHTML, {}).toBuffer(function (err, buffer) {
+            if (err) {
+                return res.send(Promise.reject())
+            }
+
+            // Use Send grid API to mail the tickets to the end user.
+            sgMail.send({
+                to:          recipientEmail, // Change to your recipient
+                from:        'info@vorm.tech', // Change to your verified sender
+                subject:     'Uw Tickets',
+                html:        standardTemplate("Uw tickets", "Deze tickets zijn naar u verzonden en kunt u gebruiken om toegang tot het evenement te krijgen."),
+                attachments: [{
+                    content:     new Buffer.from(buffer).toString("base64"),
+                    filename:    "tickets.pdf",
+                    type:        "application/pdf",
+                    disposition: "attachment"
+                }]
+            });
+        });
+
+
+        res.json(req.body)
+    } catch
+        (err) {
+        res.status(500).json({error: err.message});
+    }
+});
+
 
 /**
  * Get payment data

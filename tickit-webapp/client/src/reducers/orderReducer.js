@@ -1,4 +1,4 @@
-import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, RESEND_ORDER, GET_PAYMENT_URL, LOADING_ORDER, ORDER_REPORT_DAILY, ORDER_REPORT_MONTHLY, ORDER_REPORT_YEARLY, UPDATE_ORDER} from "../actions/types";
+import {ADD_ORDER, DELETE_ORDER, GET_ORDER, GET_ORDERS, RESEND_ORDER, GET_PAYMENT_URL, LOADING_ORDER, ORDER_REPORT_DAILY, ORDER_REPORT_MONTHLY, ORDER_REPORT_YEARLY, UPDATE_ORDER, SEND_TO_RECIPIENT} from "../actions/types";
 
 const initialState = {
     order:   {},
@@ -41,6 +41,11 @@ export default function (state = initialState, action) {
                 loading: false
             };
         case RESEND_ORDER:
+            return {
+                ...state,
+                loading: false
+            };
+        case SEND_TO_RECIPIENT:
             return {
                 ...state,
                 loading: false

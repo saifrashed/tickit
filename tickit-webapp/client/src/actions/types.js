@@ -36,19 +36,20 @@ export const SET_TOKEN     = "SET_TOKEN";
 export const LOADING_AUTH  = "LOADING_AUTH";
 
 // order actions
-export const GET_PAYMENT_URL = "GET_PAYMENT_URL";
-export const GET_ORDERS      = "GET_ORDERS";
-export const GET_ORDER       = "GET_ORDER";
-export const ADD_ORDER       = "ADD_ORDER";
-export const UPDATE_ORDER    = "UPDATE_ORDER";
-export const RESEND_ORDER    = "RESEND_ORDER";
-export const DELETE_ORDER    = "DELETE_ORDER";
-export const LOADING_ORDER   = "LOADING_ORDER";
+export const GET_PAYMENT_URL   = "GET_PAYMENT_URL";
+export const GET_ORDERS        = "GET_ORDERS";
+export const GET_ORDER         = "GET_ORDER";
+export const ADD_ORDER         = "ADD_ORDER";
+export const UPDATE_ORDER      = "UPDATE_ORDER";
+export const RESEND_ORDER      = "RESEND_ORDER";
+export const SEND_TO_RECIPIENT = "SEND_TO_RECIPIENT";
+export const DELETE_ORDER      = "DELETE_ORDER";
+export const LOADING_ORDER     = "LOADING_ORDER";
 
 /**
  *  Order statistics
  */
 
-export const ORDER_REPORT_DAILY      = "ORDER_REPORT_DAILY";
-export const ORDER_REPORT_MONTHLY       = "ORDER_REPORT_MONTHLY";
-export const ORDER_REPORT_YEARLY       = "ORDER_REPORT_YEARLY";
+export const ORDER_REPORT_DAILY   = "ORDER_REPORT_DAILY";
+export const ORDER_REPORT_MONTHLY = "ORDER_REPORT_MONTHLY";
+export const ORDER_REPORT_YEARLY  = "ORDER_REPORT_YEARLY";

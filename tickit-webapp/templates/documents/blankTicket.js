@@ -1,6 +1,4 @@
-module.exports = (order, event, ticketVariant, qrCodeUrl) => {
-
-    let date = new Date(order.createdAt);
+module.exports = (firstName, lastName, email, event, ticketVariant, qrCodeUrl) => {
 
     return `
     <!doctype html>
@@ -128,25 +126,13 @@ module.exports = (order, event, ticketVariant, qrCodeUrl) => {
 						<table>
 							<tr>
 								<td>
-								${order.firstName.toLocaleUpperCase() + " " + order.lastName.toLocaleUpperCase()} <br /> ${order.email.toLocaleUpperCase()} <br /> <br /> 
+								${firstName.toLocaleUpperCase() + " " + lastName.toLocaleUpperCase()} <br /> ${email.toLocaleUpperCase()} <br /> <br /> 
 									
 									<b>Evenement:</b> ${event.eventName}<br />
 									
 									<b>Type ticket:</b> ${ticketVariant.description} <br /> 
 
-                                    <b>Datum/tijd aanvang:</b> ${new Date(event.eventStart).toLocaleString("nl-NL", {hour12: false, hourCycle: 'h24'})} <br />
-                                    <b>Locatie:</b> ${event.eventLocation}<br />
-                                    
-                                    <b>Aantal personen:</b> ${ticketVariant.personsAmount}<br />
-
-                                    <br /> <br />
-                                    
-									<b>Factuur #:</b> ${order._id}<br />
-								
-									<b>Besteldatum:</b> ${date.toLocaleString("nl-NL", {hour12: false, hourCycle: 'h24'})}<br />
-									
-									<b>Transactienummer:</b> ${order.paymentId} <br />
-
+                                    <b>Datum aanvang:</b> ${new Date(event.eventStart).toLocaleString()} <br /> <br />
 								</td>
 							</tr>
 						</table>

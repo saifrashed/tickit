@@ -4,7 +4,7 @@ const multer   = require('multer');
 const auth     = require('../middleware/auth');
 const Events   = require('../models/events.model');
 const moment   = require('moment');
-let Orders         = require('../models/orders.model');
+let Orders     = require('../models/orders.model');
 
 
 /**

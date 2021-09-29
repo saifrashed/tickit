@@ -1,6 +1,6 @@
-const router   = require('express').Router();
-const mongoose = require('mongoose');
-const auth     = require('../middleware/auth');
+const router         = require('express').Router();
+const mongoose       = require('mongoose');
+const auth           = require('../middleware/auth');
 const TicketVariants = require('../models/ticketvariants.model');
 
 /**

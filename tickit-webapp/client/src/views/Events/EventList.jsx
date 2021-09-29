@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 // reactstrap components
 import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
 import {getUser} from "../../actions/userActions";
-import {deleteEvent, getActiveEvents, getInactiveEvents} from "../../actions/eventActions";
+import {getActiveEvents, getInactiveEvents} from "../../actions/eventActions";
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.jsx";
 import {NotificationContainer, SuccessNotification} from "../../components/Notifications/Notifications";
@@ -104,15 +104,15 @@ class EventList extends React.Component {
                                                        style={{margin: "0px 5px"}}>
                                                         <i className="now-ui-icons loader_gear"></i>
                                                     </a>
-                                                    <a href="#"
-                                                       className="btn-round btn-outline-primary btn-icon btn btn-default"
-                                                       style={{margin: "0px 5px"}} onClick={(e) => {
-                                                        e.preventDefault();
-                                                        this.deleteEvent(value._id);
-                                                        this.props.getUser(this.props.authData.token);
-                                                    }}>
-                                                        <i className="now-ui-icons ui-1_simple-remove"></i>
-                                                    </a>
+                                                    {/*<a href="#"*/}
+                                                       {/*className="btn-round btn-outline-primary btn-icon btn btn-default"*/}
+                                                       {/*style={{margin: "0px 5px"}} onClick={(e) => {*/}
+                                                        {/*e.preventDefault();*/}
+                                                        {/*this.deleteEvent(value._id);*/}
+                                                        {/*this.props.getUser(this.props.authData.token);*/}
+                                                    {/*}}>*/}
+                                                        {/*<i className="now-ui-icons ui-1_simple-remove"></i>*/}
+                                                    {/*</a>*/}
                                                 </td>
                                             </tr>
                                         )) : "U hebt nog geen evenementen."}
@@ -178,7 +178,6 @@ class EventList extends React.Component {
 }
 
 EventList.propTypes = {
-    deleteEvent:       PropTypes.func.isRequired,
     getActiveEvents:   PropTypes.func.isRequired,
     getInactiveEvents: PropTypes.func.isRequired,
     getUser:           PropTypes.func.isRequired,
@@ -192,4 +191,4 @@ const mapStateToProps = (state) => ({
     eventData: state.eventData,
 });
 
-export default connect(mapStateToProps, {getUser, getActiveEvents, getInactiveEvents, deleteEvent})(EventList);
+export default connect(mapStateToProps, {getUser, getActiveEvents, getInactiveEvents})(EventList);

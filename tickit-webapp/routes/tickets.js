@@ -3,7 +3,6 @@ const Tickets        = require('../models/tickets.model');
 const TicketVariants = require('../models/ticketvariants.model');
 const Events         = require('../models/events.model');
 const auth           = require('../middleware/auth');
-const mongoose = require('mongoose');
 
 // get all tickets
 router.route('/').get((req, res) => {
@@ -19,43 +18,37 @@ router.route('/scan').post(auth, async (req, res) => {
     try {
         const {ticketId, eventId} = req.body;
 
-        let ticket = await Tickets.findById(ticketId);
+        let ticket        = await Tickets.findById(ticketId);
         let ticketVariant = await TicketVariants.findById(ticket.ticketVariant);
-        let ticketEvent = await Events.findById(ticketVariant.event);
+        let ticketEvent   = await Events.findById(ticketVariant.event);
 
-        // console.log(req.user);
-        // console.log(ticket);
-        // console.log(ticketVariant);
-        // console.log(ticketEvent);
-
-
-        if(ticketEvent.user != req.user) {
+        if (ticketEvent.user != req.user) {
             res.json({
-                ticket:  ticket,
+                ticket:        ticket,
                 ticketVariant: ticketVariant,
-                event: ticketEvent,
-                isValid: false,
-                message: "Evenement is niet door dit profiel aangemaakt"
+                event:         ticketEvent,
+                isValid:       false,
+                message:       "Evenement is niet door dit profiel aangemaakt"
             });
         }
 
-        if(ticketEvent._id != eventId) {
+        if (ticketEvent._id != eventId) {
             res.json({
-                ticket:  ticket,
+                ticket:        ticket,
                 ticketVariant: ticketVariant,
-                event: ticketEvent,
-                isValid: false,
-                message: "Deze ticket behoort niet tot de door u geselecteerde evenement"
+                event:         ticketEvent,
+                isValid:       false,
+                message:       "Deze ticket behoort niet tot de door u geselecteerde evenement"
             });
         }
 
         if (ticket.validated) {
             res.json({
-                ticket:  ticket,
+                ticket:        ticket,
                 ticketVariant: ticketVariant,
-                event: ticketEvent,
-                isValid: false,
-                message: "Dubbele scan"
+                event:         ticketEvent,
+                isValid:       false,
+                message:       "Dubbele scan"
             });
         }
 
@@ -63,11 +56,11 @@ router.route('/scan').post(auth, async (req, res) => {
         ticket.save();
 
         res.json({
-            ticket:  ticket,
+            ticket:        ticket,
             ticketVariant: ticketVariant,
-            event: ticketEvent,
-            isValid: true,
-            message: "Success"
+            event:         ticketEvent,
+            isValid:       true,
+            message:       "Success"
         });
     } catch (err) {
         res.status(500).json({error: err.message});

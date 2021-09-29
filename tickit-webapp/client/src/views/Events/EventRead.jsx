@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import {Button, Card, CardBody, CardHeader, CardTitle, Col, Form, FormGroup, Input, Row, Table} from "reactstrap";
 import {connect} from "react-redux";
 import {getEvent, updateEvent, uploadImageEvent} from "../../actions/eventActions";
+import {sendToRecipient} from "../../actions/orderActions";
 import {toggleTicketVariant} from "../../actions/ticketVariantActions";
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.jsx";
@@ -19,14 +20,18 @@ class EventRead extends React.Component {
         super(props);
 
         this.state = {
-            _id:            "",
-            eventName:      "",
-            eventStart:     "",
-            eventEnd:       "",
-            eventLocation:  "",
-            eventAge:       "",
-            ticketVariants: "",
-            user:           "",
+            _id:                    "",
+            eventName:              "",
+            eventStart:             "",
+            eventEnd:               "",
+            eventLocation:          "",
+            eventAge:               "",
+            ticketVariants:         "",
+            user:                   "",
+            recipientFirstName:     "",
+            recipientLastName:      "",
+            recipientEmail:         "",
+            recipientTicketVariant: "",
         }
     }
 
@@ -112,6 +117,36 @@ class EventRead extends React.Component {
         const uploadImage = await this.props.uploadImageEvent(this.props.authData.token, this.props.eventData.event._id, data);
 
         window.location.reload();
+    };
+
+    /**
+     * Send tickets to recipient.
+     * @param e
+     * @returns {Promise<void>}
+     */
+    sendToRecipient = async (e) => {
+        console.log(this.state);
+
+        if (!this.state.recipientFirstName || !this.state.recipientLastName || !this.state.recipientEmail, !this.state.recipientTicketVariant) {
+            return WarningNotification("Vul alle velden in");
+        }
+
+        await this.props.sendToRecipient(this.props.authData.token, {
+            recipientFirstName:     this.state.recipientFirstName,
+            recipientLastName:      this.state.recipientLastName,
+            recipientEmail:         this.state.recipientEmail,
+            recipientTicketVariant: this.state.recipientTicketVariant,
+            event:                  this.state._id
+        });
+
+        this.setState({
+            recipientFirstName:     "",
+            recipientLastName:      "",
+            recipientEmail:         "",
+            recipientTicketVariant: ""
+        });
+
+        SuccessNotification("Tickets zijn verzonden naar " + this.state.recipientEmail);
     };
 
     /**
@@ -211,7 +246,6 @@ class EventRead extends React.Component {
                                                         Evenement start datum/tijd
                                                     </label>
                                                     <Input
-
                                                         name="eventStart"
                                                         placeholder="Event start"
                                                         type="datetime-local"
@@ -350,6 +384,99 @@ class EventRead extends React.Component {
                             </Card>
                         </Col>
                     </Row>
+
+                    <Row>
+                        <Col xs={12} md={6}>
+                            <Card>
+                                <CardBody>
+                                    <div className="author">
+                                        <h5 className="title">Tickets verzenden</h5>
+                                        <p className="description">
+                                            Hier kunt u tickets verzenden naar eventueel gasten
+                                            en personeel.
+                                        </p>
+                                    </div>
+
+                                    <Form>
+                                        <Row>
+                                            <Col md="12">
+                                                <FormGroup>
+                                                    <label>Voornaam</label>
+                                                    <Input
+                                                        name="recipientFirstName"
+                                                        placeholder="Voornaam ontvanger"
+                                                        value={this.state.recipientFirstName}
+                                                        type="text"
+                                                        onChange={(e) => {
+                                                            this.handleChange(e)
+                                                        }}
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md="12">
+                                                <FormGroup>
+                                                    <label>
+                                                        Achternaam
+                                                    </label>
+                                                    <Input
+                                                        name="recipientLastName"
+                                                        placeholder="Achternaam ontvanger"
+                                                        type="text"
+                                                        value={this.state.recipientLastName}
+                                                        onChange={(e) => {
+                                                            this.handleChange(e)
+                                                        }}
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md="12">
+                                                <FormGroup>
+                                                    <label>Email</label>
+                                                    <Input
+                                                        name="recipientEmail"
+                                                        placeholder="Email ontvanger"
+                                                        type="email"
+                                                        value={this.state.recipientEmail}
+                                                        onChange={(e) => {
+                                                            this.handleChange(e)
+                                                        }}
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md="12">
+                                                <FormGroup>
+                                                    <label>Ticket variant</label>
+
+                                                    <Input
+                                                        type="select"
+                                                        name="recipientTicketVariant"
+                                                        value={this.state.recipientTicketVariant}
+                                                        onChange={(e) => {
+                                                            this.handleChange(e)
+                                                        }}>
+                                                        <option>Selecteer een ticket variant</option>
+                                                        {this.state.ticketVariants ? this.state.ticketVariants.map((value, index) => (
+                                                            <option key={index}
+                                                                    value={value._id}>{value.description}</option>
+                                                        )) : ("")}
+                                                    </Input>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                        <button
+                                            className={"btn-round btn btn-success " + (this.state.ticketVariants ? "" : "disabled")}
+                                            style={{fontSize: "1em"}}
+                                            onClick={async (e) => {
+                                                e.preventDefault();
+                                                this.sendToRecipient(e)
+                                            }}>
+                                            Verzenden
+                                        </button>
+                                    </Form>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
                 </div>
             </>
         );
@@ -358,6 +485,7 @@ class EventRead extends React.Component {
 
 EventRead.propTypes = {
     getEvent:            PropTypes.func.isRequired,
+    sendToRecipient:     PropTypes.func.isRequired,
     toggleTicketVariant: PropTypes.func.isRequired,
     updateEvent:         PropTypes.func.isRequired,
     uploadImageEvent:    PropTypes.func.isRequired,
@@ -372,4 +500,10 @@ const mapStateToProps = (state) => ({
     eventData: state.eventData,
 });
 
-export default connect(mapStateToProps, {getEvent, updateEvent, uploadImageEvent, toggleTicketVariant})(EventRead);
+export default connect(mapStateToProps, {
+    getEvent,
+    updateEvent,
+    sendToRecipient,
+    uploadImageEvent,
+    toggleTicketVariant
+})(EventRead);
