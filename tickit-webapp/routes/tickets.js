@@ -23,36 +23,33 @@ router.route('/scan').post(auth, async (req, res) => {
         let ticketEvent   = await Events.findById(ticketVariant.event);
 
         if (ticketEvent.user != req.user) {
-            res.json({
+            return res.json({
                 ticket:        ticket,
                 ticketVariant: ticketVariant,
                 event:         ticketEvent,
                 isValid:       false,
                 message:       "Evenement is niet door dit profiel aangemaakt"
             });
-            return false;
         }
 
         if (ticketEvent._id != eventId) {
-            res.json({
+            return res.json({
                 ticket:        ticket,
                 ticketVariant: ticketVariant,
                 event:         ticketEvent,
                 isValid:       false,
                 message:       "Deze ticket behoort niet tot de door u geselecteerde evenement"
             });
-            return false;
         }
 
         if (ticket.validated) {
-            res.json({
+            return res.json({
                 ticket:        ticket,
                 ticketVariant: ticketVariant,
                 event:         ticketEvent,
                 isValid:       false,
                 message:       "Dubbele scan"
             });
-            return false;
         }
 
         ticket.validated = true;
