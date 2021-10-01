@@ -29,7 +29,7 @@ class ShopEvent extends React.Component {
                    if (event.data[0].ticketVariants.length) {
                        SuccessNotification("Koop hier uw tickets!");
                    } else {
-                       WarningNotification("Er zijn geen tickets in verkoop");
+                       WarningNotification("Er is momenteel geen aanbod");
                    }
                });
     }
@@ -69,42 +69,130 @@ class ShopEvent extends React.Component {
      * @param e
      */
     updateOrder = (ticketVariantId, e) => {
+        var targetVariant = this.getTargetProduct(ticketVariantId);
 
-
-        var targetVariant = this.props.eventData.event.ticketVariants.filter(obj => {
-            return obj._id === ticketVariantId;
-        });
-
-        var quantityItem;
-
-        if (isNaN(e.target.value)) {
-            quantityItem = 0
-        } else {
-            quantityItem = e.target.value
+        // input validation
+        if (!e.target.validity.valid || !e.target.value) {
+            return false;
         }
 
         const order = {
             ticketVariant: targetVariant[0],
-            quantity:      quantityItem
+            quantity:      e.target.value
         };
 
         // finds and updates order item in array
-        var index = this.state.order.findIndex(x => x.ticketVariant._id === ticketVariantId);
+        var index = this.getProductIndex(ticketVariantId);
 
         if (index === -1) {
+            this.addTickets(order)
+        } else {
+            this.editOrder(index, parseInt(e.target.value));
+        }
+    };
+
+    /**
+     * Increment a ticket variant in the order
+     * @param ticketVariantId
+     */
+    incrementOrder = (ticketVariantId) => {
+        var targetVariant = this.getTargetProduct(ticketVariantId);
+        var index         = this.getProductIndex(ticketVariantId);
+
+        const order = {
+            ticketVariant: targetVariant[0],
+            quantity:      (this.state.order[index] ? this.state.order[index].quantity + 1 : 1)
+        };
+
+        if (index === -1) {
+            this.addTickets(order)
+        } else {
+            this.editOrder(index, this.state.order[index].quantity + 1);
+        }
+    };
+
+
+    /**
+     * Decrement a ticket variant in the order
+     * @param ticketVariantId
+     */
+    decrementOrder = (ticketVariantId) => {
+
+        var targetVariant = this.getTargetProduct(ticketVariantId);
+        var index         = this.getProductIndex(ticketVariantId);
+
+
+        // input validation
+        if ((parseInt(this.state.order[index].quantity) - 1) === -1) {
+            return false;
+        }
+
+        const order = {
+            ticketVariant: targetVariant[0],
+            quantity:      (this.state.order[index] ? this.state.order[index].quantity + 1 : 1)
+        };
+
+        if (index === -1) {
+            this.addTickets(order)
+        } else {
+            this.editOrder(index, this.state.order[index].quantity - 1);
+        }
+    };
+
+
+    /**
+     * Get target variant with a ticket variant ID
+     * @param ticketVariantId
+     * @returns {*}
+     */
+    getTargetProduct(ticketVariantId) {
+        return this.props.eventData.event.ticketVariants.filter(obj => {
+            return obj._id === ticketVariantId;
+        });
+    }
+
+    /**
+     * Get index of a product within order
+     * @param ticketVariantId
+     * @returns {*}
+     */
+    getProductIndex(ticketVariantId) {
+        return this.state.order.findIndex(x => x.ticketVariant._id === ticketVariantId);
+    }
+
+    /**
+     * Add a order
+     * @param order
+     */
+    addTickets(order) {
+        this.setState({
+            order: this.state.order.concat(order)
+        });
+    }
+
+    /**
+     * Edit a order
+     * @param index
+     * @param newQuantity
+     */
+    editOrder(index, newQuantity) {
+
+        if (newQuantity == 0) {
             this.setState({
-                order: this.state.order.concat(order)
-            });
+                order: [
+                    ...this.state.order.slice(0, index),
+                ]
+            })
         } else {
             this.setState({
                 order: [
                     ...this.state.order.slice(0, index),
-                    Object.assign({}, this.state.order[index], {quantity: e.target.value}),
+                    Object.assign({}, this.state.order[index], {quantity: parseInt(newQuantity)}),
                     ...this.state.order.slice(index + 1)
                 ]
-            });
+            })
         }
-    };
+    }
 
     /**
      * Calculates totals
@@ -121,7 +209,7 @@ class ShopEvent extends React.Component {
 
 
         if (subTotal !== 0) {
-            total           = (subTotal / 100 * 3) + subTotal + 0.30;
+            total           = (subTotal / 100 * 3) + subTotal;
             transactionCost = (subTotal / 100 * 3) + 0.30;
         }
 
@@ -149,6 +237,8 @@ class ShopEvent extends React.Component {
         const {event}   = this.props.eventData;
         let buttonClass = this.state.orderTotals.total ? "btn btn-primary btn-lg btn-block" : "btn btn-primary btn-lg btn-block disabled";
 
+        console.log(event);
+
         return (
             <>
                 <NotificationContainer/>
@@ -165,12 +255,16 @@ class ShopEvent extends React.Component {
                                      right:    "0",
                                      margin:   "auto"
                                  }}/>
-                            <h2>{event.eventName}</h2>
+                            <h2 className={"mb-0 mt-5"}>{event.eventName}</h2>
+                            <p className="description"
+                               style={{color: "#000"}}>{new Date(event.eventStart).toLocaleString() + " - " + new Date(event.eventEnd).toLocaleString()}</p>
+                            <p className="description" style={{color: "#000"}}>{event.eventLocation}</p>
+
                         </div>
 
                         <div className="content">
                             <div className="row">
-                                <div className="col-md-12 col-lg-8">
+                                <div className="col-md-12 col-lg-8 pr-md-0">
                                     <div className="event-image"
                                          style={{backgroundImage: "url(" + event.eventImage + ")"}}>
                                     </div>
@@ -199,21 +293,68 @@ class ShopEvent extends React.Component {
                                                                     <label htmlFor="quantity">Aantal:</label>
 
                                                                     {value.availability ? (
-                                                                        <input id="quantity" name="quantity"
-                                                                               type="number"
-                                                                               min="0" defaultValue={0}
-                                                                               onChange={(e) => {
-                                                                                   this.updateOrder(value._id, e)
-                                                                               }}
-                                                                               className="form-control quantity-input"/>
+                                                                        <div>
+                                                                            <button
+                                                                                className={"btn-round btn-outline-danger btn-icon btn btn-default " + (this.getProductIndex(value._id) != -1 ? " " : "disabled")}
+                                                                                style={{margin: "0px 5px"}}
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                    this.decrementOrder(value._id);
+                                                                                }}>
+
+                                                                                <i className="now-ui-icons ui-1_simple-delete"></i>
+                                                                            </button>
+
+                                                                            <input id="quantity"
+                                                                                   name="quantity"
+                                                                                   type="number"
+                                                                                   min="0"
+                                                                                   value={this.state.order[this.getProductIndex(value._id)] ? this.state.order[this.getProductIndex(value._id)].quantity : 0}
+                                                                                   onChange={(e) => {
+                                                                                       this.updateOrder(value._id, e)
+                                                                                   }}
+                                                                                   className="form-control quantity-input"/>
+
+                                                                            <button
+                                                                                className={"btn-round btn-outline-success btn-icon btn btn-default"}
+                                                                                style={{margin: "0px 5px"}}
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                    this.incrementOrder(value._id);
+                                                                                }}>
+
+                                                                                <i className="now-ui-icons ui-1_simple-add"></i>
+                                                                            </button>
+                                                                        </div>
                                                                     ) : (
-                                                                         <input disabled id="quantity" name="quantity"
-                                                                                type="number"
-                                                                                min="0" defaultValue={0}
-                                                                                onChange={(e) => {
-                                                                                    this.updateOrder(value._id, e)
-                                                                                }}
-                                                                                className="form-control quantity-input"/>
+                                                                         <div>
+
+                                                                             <button
+                                                                                 className={"btn-round btn-outline-danger btn-icon btn btn-default disabled"}
+                                                                                 style={{margin: "0px 5px"}}
+                                                                                 onClick={(e) => {
+                                                                                     e.preventDefault();
+                                                                                 }}>
+
+                                                                                 <i className="now-ui-icons ui-1_simple-delete"></i>
+                                                                             </button>
+                                                                             <input disabled
+                                                                                    id="quantity"
+                                                                                    name="quantity"
+                                                                                    type="number"
+                                                                                    min="0"
+                                                                                    defaultValue={0}
+                                                                                    className="form-control quantity-input"/>
+                                                                             <button
+                                                                                 className={"btn-round btn-outline-success btn-icon btn btn-default disabled"}
+                                                                                 style={{margin: "0px 5px"}}
+                                                                                 onClick={(e) => {
+                                                                                     e.preventDefault();
+                                                                                 }}>
+
+                                                                                 <i className="now-ui-icons ui-1_simple-add"></i>
+                                                                             </button>
+                                                                         </div>
                                                                      )}
 
                                                                 </div>
@@ -230,7 +371,7 @@ class ShopEvent extends React.Component {
                                     </div>
                                 </div>
 
-                                <div className="col-md-12 col-lg-4">
+                                <div className="col-md-12 col-lg-4 pl-md-0">
                                     <div className="summary">
                                         <h3>Betaal overzicht</h3>
 

@@ -78,9 +78,9 @@ class Confirmation extends React.Component {
                     <div className="content text-center p-3">
                         <Lottie options={defaultOptions} height={400} width={"100%"}/>
 
-                        <h2>Veel plezier toegewenst!</h2>
+                        <h2>Veel plezier!</h2>
                         <p className="text-muted text-center text-small">
-                            U heeft betaald en uw bestelling wordt momenteel verwerkt. Wanneer dit gedaan is krijgt u
+                            U heeft betaald en uw bestelling wordt momenteel verwerkt. Wanneer dit klaar is krijgt u
                             een mail met de tickets.
                         </p>
                     </div>

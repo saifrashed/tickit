@@ -241,7 +241,21 @@ Shop event
 
 .shopping-cart .items .product .info .quantity .quantity-input {
     margin: auto;
+    display: inline-block;
     width: 80px;
+    padding: 4px 10px;
+    text-align: center;
+}
+
+.shopping-cart .items .product .info .quantity button {
+    height: 1.7rem;
+    min-width: 1.375rem;
+    width: 1.7rem;
+    padding: 0;
+    font-size: 0.7375rem;
+    overflow: hidden;
+    position: relative;
+    line-height: normal;
 }
 
 .shopping-cart .items .product .info .price {
@@ -302,11 +316,6 @@ Shop event
     }
 
     .shopping-cart .items .product .info .quantity {
-        text-align: center;
-    }
-
-    .shopping-cart .items .product .info .quantity .quantity-input {
-        padding: 4px 10px;
         text-align: center;
     }
 }

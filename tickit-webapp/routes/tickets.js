@@ -30,6 +30,7 @@ router.route('/scan').post(auth, async (req, res) => {
                 isValid:       false,
                 message:       "Evenement is niet door dit profiel aangemaakt"
             });
+            return false;
         }
 
         if (ticketEvent._id != eventId) {
@@ -40,6 +41,7 @@ router.route('/scan').post(auth, async (req, res) => {
                 isValid:       false,
                 message:       "Deze ticket behoort niet tot de door u geselecteerde evenement"
             });
+            return false;
         }
 
         if (ticket.validated) {
@@ -50,6 +52,7 @@ router.route('/scan').post(auth, async (req, res) => {
                 isValid:       false,
                 message:       "Dubbele scan"
             });
+            return false;
         }
 
         ticket.validated = true;
