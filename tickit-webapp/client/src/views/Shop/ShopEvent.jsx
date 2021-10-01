@@ -209,7 +209,7 @@ class ShopEvent extends React.Component {
 
 
         if (subTotal !== 0) {
-            total           = (subTotal / 100 * 3) + subTotal;
+            total           = ((subTotal / 100 * 3) + 0.30) + subTotal;
             transactionCost = (subTotal / 100 * 3) + 0.30;
         }
 
