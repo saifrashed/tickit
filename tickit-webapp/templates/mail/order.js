@@ -142,7 +142,7 @@ module.exports = (order) => {
                     <tr>
                       <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                         <div style='color:#777777;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:center;'>
-                          Uw factuur en tickets bevinden zich in deze mail. Veel plezier toegewenst op uw evenement namens TickIT!
+                          Uw tickets staan in de bijlage. Veel plezier!
                         </div>
                       </td>
                     </tr>
@@ -237,7 +237,7 @@ module.exports = (order) => {
                               </span>
                               <br />
                               <span style='padding-bottom:8px; display: inline-block;'>
-                                €` + parseFloat( (order.total - order.subTotal)).toFixed(2) + `
+                                €` + parseFloat((order.total - order.subTotal)).toFixed(2) + `
                               </span>
                               <br />
                               <span style='display: inline-block;font-weight: bold; color: #4d4d4d'>

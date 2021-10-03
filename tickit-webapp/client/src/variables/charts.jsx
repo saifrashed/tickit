@@ -363,7 +363,7 @@ const dashboardMonthlyPerformanceChart = (data = [0,0,0,0,0,0,0,0,0,0]) => {
                 ],
                 datasets: [
                     {
-                        label:                 "Aantal",
+                        label:                 "Aantal (EUR)",
                         backgroundColor:       gradientFill,
                         borderColor:           "#2CA8FF",
                         pointBorderColor:      "#FFF",

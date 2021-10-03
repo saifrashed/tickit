@@ -127,12 +127,8 @@ class ShopCheckout extends React.Component {
                                      margin:   "auto"
                                  }}/>
 
-                            <h2>Afrekenen</h2>
-                            <p>
-                                U zal verwezen worden naar een betaal pagina waarna u de factuur en tickets ontvangen
-                                zal
-                                krijgen via mail of anders kunt downloaded op een pagina.
-                            </p>
+                            <h2>Checkout</h2>
+
                         </div>
 
                         <div className="row">
@@ -168,7 +164,7 @@ class ShopCheckout extends React.Component {
                             </div>
 
                             <div className="col-md-8 order-md-1">
-                                <h4 className="mb-3">Checkout</h4>
+                                <h4 className="mb-3">Gegevens</h4>
                                 <form action={"#"}>
                                     <div className="row">
                                         <div className="col-md-6 mb-3">

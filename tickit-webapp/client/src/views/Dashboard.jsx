@@ -141,7 +141,7 @@ class Dashboard extends React.Component {
                         <Col xs={12} md={12}>
                             <Card className="card-chart">
                                 <CardHeader>
-                                    <h5 className="card-category">dagelijkse totalen</h5>
+                                    <h5 className="card-category">Maandelijkse totalen</h5>
                                     <CardTitle tag="h4">Omzet</CardTitle>
                                     {/*<UncontrolledDropdown>*/}
                                         {/*<DropdownToggle*/}
