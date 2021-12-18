@@ -402,7 +402,7 @@ router.route('/payments/:id').get(auth, async (req, res) => {
 
         res.json(payment);
     } catch (e) {
-        res.status(500).json({error: err.message});
+        res.status(500).json({error: e.message});
     }
 });
 
@@ -415,7 +415,7 @@ router.route('/payments').get(auth, async (req, res) => {
 
         res.json(payment);
     } catch (e) {
-        res.status(500).json({error: err.message});
+        res.status(500).json({error: e.message});
     }
 });
 

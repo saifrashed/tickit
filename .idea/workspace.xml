@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="04297f35-f0b6-489e-8bd0-970f89348b88" name="Default Changelist" comment="" />
+    <list default="true" id="04297f35-f0b6-489e-8bd0-970f89348b88" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tickit-webapp/.env" beforeDir="false" afterPath="$PROJECT_DIR$/tickit-webapp/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tickit-webapp/routes/orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/tickit-webapp/routes/orders.js" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,70 +13,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tickit-webapp/.env">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tickit-webapp/client/src/views/Shop/ShopEvent.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="198" column="7" lean-forward="true" selection-start-line="198" selection-start-column="7" selection-end-line="198" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tickit-webapp/client/src/views/Events/EventAdd.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-846">
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tickit-webapp/client/src/views/Events/EventRead.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-216">
-              <caret line="200" column="48" selection-start-line="200" selection-end-line="201" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-                <element signature="e#117#231#0" expanded="true" />
-                <element signature="e#504#569#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tickit-webapp/routes/events.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="104" column="39" lean-forward="true" selection-start-line="104" selection-start-column="39" selection-end-line="104" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tickit-webapp/client/src/views/Shop/ShopCheckout.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2490">
-              <caret line="166" column="61" selection-start-line="166" selection-start-column="61" selection-end-line="166" selection-end-column="61" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="105">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -89,7 +35,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>users_single</find>
       <find>use</find>
       <find>ima</find>
       <find>image</find>
@@ -119,6 +64,7 @@
       <find>maandelij</find>
       <find>afreke</find>
       <find>add</find>
+      <find>get</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/tickit-webapp/src</dir>
@@ -154,7 +100,6 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/tickit-webapp/client/src/components/FixedPlugin/FixedPlugin.jsx" />
         <option value="$PROJECT_DIR$/tickit-webapp/models/orders.model.js" />
-        <option value="$PROJECT_DIR$/tickit-webapp/.env" />
         <option value="$PROJECT_DIR$/tickit-webapp/client/src/views/User/UserPage.jsx" />
         <option value="$PROJECT_DIR$/tickit-webapp/client/src/components/Navbars/Navbar.jsx" />
         <option value="$PROJECT_DIR$/tickit-app/src/screens/auth/LoginScan.js" />
@@ -172,7 +117,6 @@
         <option value="$PROJECT_DIR$/tickit-webapp/client/src/actions/types.js" />
         <option value="$PROJECT_DIR$/tickit-webapp/client/src/reducers/orderReducer.js" />
         <option value="$PROJECT_DIR$/tickit-webapp/templates/mail/standard.js" />
-        <option value="$PROJECT_DIR$/tickit-webapp/routes/orders.js" />
         <option value="$PROJECT_DIR$/tickit-webapp/client/src/actions/orderActions.js" />
         <option value="$PROJECT_DIR$/tickit-webapp/client/src/views/Events/EventRead.jsx" />
         <option value="$PROJECT_DIR$/tickit-webapp/client/src/assets/css/main.css" />
@@ -183,6 +127,8 @@
         <option value="$PROJECT_DIR$/tickit-webapp/client/src/variables/charts.jsx" />
         <option value="$PROJECT_DIR$/tickit-webapp/templates/mail/order.js" />
         <option value="$PROJECT_DIR$/tickit-webapp/client/src/views/Shop/ShopEvent.jsx" />
+        <option value="$PROJECT_DIR$/tickit-webapp/routes/orders.js" />
+        <option value="$PROJECT_DIR$/tickit-webapp/.env" />
       </list>
     </option>
   </component>
@@ -231,6 +177,14 @@
               <item name="tickit-webapp" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tickit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tickit" type="462c0819:PsiDirectoryNode" />
+              <item name="tickit-webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -241,6 +195,33 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="Shop" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tickit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tickit" type="462c0819:PsiDirectoryNode" />
+              <item name="tickit-webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tickit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tickit" type="462c0819:PsiDirectoryNode" />
+              <item name="tickit-webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="uploads" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tickit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tickit" type="462c0819:PsiDirectoryNode" />
+              <item name="tickit-webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="uploads" type="462c0819:PsiDirectoryNode" />
+              <item name="events" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tickit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tickit" type="462c0819:PsiDirectoryNode" />
+              <item name="tickit-webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -348,18 +329,20 @@
       <workItem from="1632992418434" duration="3527000" />
       <workItem from="1632998638842" duration="430000" />
       <workItem from="1633007643424" duration="8310000" />
-      <workItem from="1633264394010" duration="3596000" />
+      <workItem from="1633264394010" duration="4480000" />
+      <workItem from="1633271445545" duration="19000" />
+      <workItem from="1633994987586" duration="12000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="350361000" />
+    <option name="totallyTimeSpent" value="351276000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23504274" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23992674" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -447,9 +430,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tickit-webapp/routes/roles.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/tickit-webapp/client/src/components/FixedPlugin/FixedPlugin.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="449">
@@ -624,13 +604,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tickit-webapp/routes/orders.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="335" column="32" selection-start-line="335" selection-start-column="15" selection-end-line="335" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tickit-app/src/screens/Scanner.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="506">
@@ -764,13 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tickit-webapp/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tickit-webapp/templates/mail/order.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3480">
@@ -799,22 +765,6 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
             <element signature="e#379#444#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tickit-webapp/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tickit-webapp/client/src/views/Events/EventAdd.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-846">
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -855,6 +805,39 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tickit-webapp/client/src/views/Events/EventAdd.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-846">
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tickit-webapp/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tickit-webapp/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tickit-webapp/routes/orders.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1243">
+          <caret line="402" column="25" selection-start-line="402" selection-start-column="25" selection-end-line="402" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tickit-webapp/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
